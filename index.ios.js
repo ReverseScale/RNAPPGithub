@@ -72,7 +72,7 @@ export default class RNAPPGithub extends Component {
                     initialRoute={{
                         component: Boy
                     }}
-                    renderScene={(route,navigator)=>{
+                    renderScene={(route, navigator)=>{
                         let Component=route.component;
                         return <Component navigator={navigator} {...route.params}/>
                     }}
