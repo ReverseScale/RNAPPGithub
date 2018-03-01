@@ -12,17 +12,18 @@ import {
     Navigator,
     Image,
     Text,
-    View
+    View,
 } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 
 import Boy from './Boy'
+import ListViewTest from './ListViewTest'
 
 export default class RNAPPGithub extends Component {
     constructor(props){
         super(props);
         this.state={
-            selectedTab:'tb_popular'
+            selectedTab:'tb_popular',
         }
     }
 
@@ -68,15 +69,17 @@ export default class RNAPPGithub extends Component {
                 {/*</TabNavigator.Item>*/}
             {/*</TabNavigator>*/}
 
-                <Navigator
-                    initialRoute={{
-                        component: Boy
-                    }}
-                    renderScene={(route, navigator)=>{
-                        let Component=route.component;
-                        return <Component navigator={navigator} {...route.params}/>
-                    }}
-                ></Navigator>
+                {/*<Navigator*/}
+                    {/*initialRoute={{*/}
+                        {/*component: Boy*/}
+                    {/*}}*/}
+                    {/*renderScene={(route, navigator)=>{*/}
+                        {/*let Component=route.component;*/}
+                        {/*return <Component navigator={navigator} {...route.params}/>*/}
+                    {/*}}*/}
+                {/*></Navigator>*/}
+
+                <ListViewTest/>
             </View>
 
         );
