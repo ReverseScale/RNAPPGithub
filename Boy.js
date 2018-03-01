@@ -5,6 +5,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import Girl from './Girl'
+import NavigationBar from './NavigationBar'
 export default class Boy extends Component{
     constructor(props){
         super(props);
@@ -15,6 +16,12 @@ export default class Boy extends Component{
     render(){
         return(
             <View style={styles.constructor}>
+                <NavigationBar
+                    title={'Boy'}
+                    style={{
+                        backgroundColor:'#EE6363',
+                    }}
+                />
                 <Text style={styles.text}>I am boy</Text>
                 <Text style={styles.text}
                       onPress={()=>{
@@ -40,9 +47,8 @@ const styles=StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'gray',
-        justifyContent:'center',
     },
     text:{
-        fontSize:20,
+        fontSize:29,
     }
 })

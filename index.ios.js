@@ -87,11 +87,11 @@ export default class RNAPPGithub extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        backgroundColor:'white',
     },
     page1:{
         flex:1,
-        backgroundColor: 'red',
+        backgroundColor:'red',
     },
     page2:{
         flex:1,
