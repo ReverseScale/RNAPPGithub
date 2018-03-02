@@ -12,6 +12,8 @@ import {
   View
 } from 'react-native';
 
+import setup from './js/pages/setup'
+
 export default class RNAPPGithub extends Component {
   render() {
     return (
@@ -50,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('RNAPPGithub', () => RNAPPGithub);
+AppRegistry.registerComponent('RNAPPGithub', () => setup);
