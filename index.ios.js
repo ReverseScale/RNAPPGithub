@@ -18,6 +18,7 @@ import TabNavigator from 'react-native-tab-navigator';
 
 import Boy from './Boy'
 import ListViewTest from './ListViewTest'
+import FetchTest from  './FetchTest'
 
 export default class RNAPPGithub extends Component {
     constructor(props){
@@ -79,7 +80,9 @@ export default class RNAPPGithub extends Component {
                     {/*}}*/}
                 {/*></Navigator>*/}
 
-                <ListViewTest/>
+                {/*<ListViewTest/>*/}
+
+                <FetchTest/>
             </View>
 
         );
