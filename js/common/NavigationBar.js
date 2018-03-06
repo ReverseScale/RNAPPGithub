@@ -78,7 +78,7 @@ export default class NavigationBar extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'gray',
+        backgroundColor: 'blue',
     },
     navBar: {
         flexDirection: 'row',
