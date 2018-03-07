@@ -27,11 +27,13 @@ export default class HomePage extends Component {
         }
     }
     componentDidMount(){
+        // 通知监听
         this.listener = DeviceEventEmitter.addListener('showToast', (text) => {
             this.toast.show(text, DURATION.LENGTH_LONG);
         });
     }
     componentWillUnmount(){
+        // 移除通知监听
         if (this.listener) {
             this.listener.remove();
         }

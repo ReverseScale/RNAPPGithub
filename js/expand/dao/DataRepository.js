@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 export default class DataRepository {
+    // 保存进数据库中
     saveRepository(url, items, callback) {
         if (!items || !url)return;
         let wrapData = {items: items, update_date: new Date().getTime()};
@@ -15,6 +16,7 @@ export default class DataRepository {
 
     fetchRepository(url) {
         return new Promise((resolve, reject)=> {
+            // 获取本地数据
             this.fetchLocalRepository(url).then((wrapData)=> {
                 if (wrapData) {
                     resolve(wrapData, true);
@@ -36,6 +38,11 @@ export default class DataRepository {
         })
     }
 
+    /**
+     * 获取本地数据
+     * @param url
+     * @returns {Promise<any>}
+     */
     fetchLocalRepository(url) {
         return new Promise((resolve, reject)=> {
             AsyncStorage.getItem(url, (error, result)=> {
@@ -54,6 +61,7 @@ export default class DataRepository {
         })
     }
 
+    // 获取网络数据
     fetchNetRepository(url) {
         return new Promise((resolve, reject)=> {
             fetch(url)
@@ -66,10 +74,17 @@ export default class DataRepository {
                     return;
                 }
                 resolve(responseData.items);
+                // 保证进数组
                 this.saveRepository(url, responseData.items)
             }).done();
         })
     }
+
+    /**
+     * 检查数据过期
+     * @param longTime
+     * @returns {boolean}
+     */
     checkDate(longTime) {
         return false;
         let currentDate = new Date();

@@ -74,7 +74,7 @@ export default class CustomKeyPage extends Component {
                         this.props.navigator.pop();
                     }
                     }, {
-                    text: 'Yes', onPress: () => {
+                        text: 'Yes', onPress: () => {
                         this.onSave();
                     }
                 }
@@ -129,8 +129,8 @@ export default class CustomKeyPage extends Component {
     }
 
     render() {
-        let rightButtonTitle=this.isRemoveKey? '移除':'保存';
         let title=this.isRemoveKey? '标签移除':'自定义标签';
+        let rightButtonTitle=this.isRemoveKey? '移除':'保存';
         let navigationBar =
             <NavigationBar
                 title={title}

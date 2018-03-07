@@ -95,6 +95,7 @@ class PopularTab extends Component {
             isLoading: true
         })
         let url=this.genFetchUrl(this.props.tabLabel);
+
         this.dataRepository
             .fetchRepository(url)
             .then(result=> {
@@ -104,7 +105,9 @@ class PopularTab extends Component {
                     isLoading: false
                 });
                 DeviceEventEmitter.emit('showToast', '显示缓存数据');
-                if (result && result.update_date && !this.dataRepository.checkDate(result.update_date))return this.dataRepository.fetchNetRepository(url);
+                if (result && result.update_date && !this.dataRepository.checkDate(result.update_date)) {
+                    return this.dataRepository.fetchNetRepository(url);
+                }
             })
             .then((items)=> {
                 if (!items || items.length === 0)return;
@@ -112,6 +115,7 @@ class PopularTab extends Component {
                     dataSource: this.state.dataSource.cloneWithRows(items),
                 });
                 DeviceEventEmitter.emit('showToast', '显示网络数据');
+                console.log(e);
             })
             .catch(error=> {
                 console.log(error);

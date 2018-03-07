@@ -80,15 +80,15 @@ export default class SortKeyPage extends Component {
     onBack() {
         if (!ArrayUtils.isEqual(this.originalCheckedArray, this.state.checkedArray)) {
             Alert.alert(
-                'Confirm Exit',
-                'Do you want to save your changes before exitting?',
+                '提示',
+                '是否保存修改?',
                 [
                     {
-                        text: 'No', onPress: () => {
+                        text: '否', onPress: () => {
                         this.props.navigator.pop();
                     }
                     }, {
-                    text: 'Yes', onPress: () => {
+                        text: '是', onPress: () => {
                         this.onSave(true);
                     }
                 }
