@@ -17,7 +17,7 @@ export default class RepositoryDetail extends Component {
         super(props);
         this.url = this.props.item.html_url;
         var title = this.props.item.full_name;
-        debugger;
+        // debugger;
         this.state = {
             url: this.url,
             canGoBack: false,
