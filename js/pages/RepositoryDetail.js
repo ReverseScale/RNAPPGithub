@@ -1,8 +1,3 @@
-/**
- * RepositoryDetail
- * @flow
- **/
-'use strict'
 import React, {Component} from 'react'
 import {
     Image,
@@ -22,6 +17,7 @@ export default class RepositoryDetail extends Component {
         super(props);
         this.url = this.props.item.html_url;
         var title = this.props.item.full_name;
+        debugger;
         this.state = {
             url: this.url,
             canGoBack: false,
