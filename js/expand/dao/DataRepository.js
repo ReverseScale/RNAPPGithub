@@ -6,7 +6,15 @@ import {
     AsyncStorage,
 } from 'react-native';
 
+import Trending from "GitHubTrending";
+
+export var FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending'}
+
 export default class DataRepository {
+    constructor(flag) {
+        this.flag = flag;
+        if(flag===FLAG_STORAGE.flag_trending)this.treding=new Trending();
+    }
     // 保存进数据库中
     saveRepository(url, items, callback) {
         if (!items || !url)return;
@@ -64,19 +72,32 @@ export default class DataRepository {
     // 获取网络数据
     fetchNetRepository(url) {
         return new Promise((resolve, reject)=> {
-            fetch(url)
-                .then((response)=>response.json())
-                .catch((error)=> {
+            if (this.flag === FLAG_STORAGE.flag_popular) {
+                fetch(url)
+                    .then((response)=>response.json())
+                    .catch((error)=> {
+                        reject(error);
+                    }).then((responseData)=> {
+                    if (!responseData||!responseData.items) {
+                        reject(new Error('responseData is null'));
+                        return;
+                    }
+                    resolve(responseData.items);
+                    this.saveRepository(url,responseData.items)
+                }).done();
+            } else {
+                this.treding.fetchTrending(url)
+                    .then((items)=> {
+                        if (!items) {
+                            reject(new Error('responseData is null'));
+                            return;
+                        }
+                        resolve(items);
+                        this.saveRepository(url,items)
+                    }).catch((error)=> {
                     reject(error);
-                }).then((responseData)=> {
-                if (!responseData || !responseData.items) {
-                    reject(new Error('responseData is null'));
-                    return;
-                }
-                resolve(responseData.items);
-                // 保证进数组
-                this.saveRepository(url, responseData.items)
-            }).done();
+                })
+            }
         })
     }
 

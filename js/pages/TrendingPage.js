@@ -1,6 +1,3 @@
-/**
- * Created by penn on 2016/12/21.
- */
 
 import React, {Component} from 'react';
 import {
@@ -19,13 +16,13 @@ import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-v
 import RepositoryCell from '../common/RepositoryCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import RepositoryDetail from './RepositoryDetail'
+import TrendingCell from '../common/TrendingCell'
 
-const URL = 'https://api.github.com/search/repositories?q=';
-const QUERY_STR = '&sort=stars';
-export default class PopularPage extends Component {
+const API_URL = 'https://github.com/trending/';
+export default class TrendingPage extends Component {
     constructor(props) {
         super(props);
-        this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
+        this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_language);
         this.state = {
             result: '',
             languages: [],
@@ -51,7 +48,7 @@ export default class PopularPage extends Component {
     render() {
         let navigationBar =
             <NavigationBar
-                title={'最热'}
+                title={'趋势'}
                 statusBar={{backgroundColor: "#2196F3"}}
             />;
         let content = this.state.languages.length > 0 ?
@@ -67,7 +64,7 @@ export default class PopularPage extends Component {
             >
                 {this.state.languages.map((reuslt, i, arr)=> {
                     let language = arr[i];
-                    return language.checked ? <PopularTab key={i} tabLabel={language.name} {...this.props}/> : null;
+                    return language.checked ? <TrendingTab key={i} tabLabel={language.name} {...this.props}/> : null;
                 })}
             </ScrollableTabView> : null;
         return <View style={styles.container}>
@@ -76,10 +73,10 @@ export default class PopularPage extends Component {
         </View>
     }
 }
-class PopularTab extends Component {
+class TrendingTab extends Component {
     constructor(props) {
         super(props);
-        this.dataRepository = new DataRepository(FLAG_STORAGE.flag_popular);
+        this.dataRepository = new DataRepository(FLAG_STORAGE.flag_trending);
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2}),
             isLoading: false,
@@ -94,7 +91,7 @@ class PopularTab extends Component {
         this.setState({
             isLoading: true
         })
-        let url=this.genFetchUrl(this.props.tabLabel);
+        let url=this.genFetchUrl('?since=daily',this.props.tabLabel);
 
         this.dataRepository
             .fetchRepository(url)
@@ -134,12 +131,12 @@ class PopularTab extends Component {
             },
         });
     }
-    genFetchUrl(key) {
-        return URL + key + QUERY_STR;
+    genFetchUrl(timeSpan,category) {
+        return API_URL + category + timeSpan.searchText;
     }
 
     renderRow(data) {
-        return <RepositoryCell
+        return <TrendingCell
             key={data.id}
             data={data}
             onSelect={()=>this.onSelectRepository(data)}
@@ -174,3 +171,76 @@ const styles = StyleSheet.create({
         fontSize: 20
     }
 })
+
+
+
+
+
+
+
+
+
+
+// import React, {Component} from 'react';
+// import {
+//     StyleSheet,
+//     Text,
+//     View,
+//     ListView,
+//     TextInput,
+// } from 'react-native';
+
+// import NavigationBar from '../common/NavigationBar'
+// import DataRepository ,{FLAG_STORAGE} from '../expand/dao/DataRepository'
+
+// const URL='https://github.com/trending/'
+
+// export default class TrendingPage extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.dataRepository=new DataRepository(FLAG_STORAGE.flag_trending);
+//         this.state = {
+//             result:''
+//         }
+//     }
+//     onload() {
+//         let url=URL+this.text;
+//         this.dataRepository.fetchRepository(url)
+//             .then(result=>{
+//                 this.setState({
+//                     result:JSON.stringify(result),
+//                 });
+//             })
+//             .catch(error=>{
+//                 this.setState({
+//                     result:JSON.stringify(error),
+//                 })
+//             })
+//     }
+//     render() {
+//         return (
+//             <View>
+//                 <NavigationBar
+//                     title="GitHubTrending的使用"/>
+//                 <TextInput style={{height: 30, borderWidth: 1}}
+//                            onChangeText={(text)=> {
+//                                this.text = text;
+//                            }}
+//                 />
+//                 <View style={{flexDirection: 'row'}}>
+//                     <Text style={styles.text} onPress={()=>this.onload()}>
+//                         加载数据
+//                     </Text>
+//                     <Text style={{flex:1}}>{this.state.result}</Text>
+//                 </View>
+//             </View>
+//         )
+//     }
+// }
+// const styles = StyleSheet.create({
+//     text: {
+//         fontSize: 20,
+//         margin:10
+//     }
+// })
+
