@@ -30,7 +30,7 @@ export default class CustomKeyPage extends Component {
     }
 
     componentDidMount() {
-        this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
+        this.languageDao = new LanguageDao(this.props.flag);
         this.loadData();
     }
 
@@ -129,8 +129,9 @@ export default class CustomKeyPage extends Component {
     }
 
     render() {
-        let title=this.isRemoveKey? '标签移除':'自定义标签';
         let rightButtonTitle=this.isRemoveKey? '移除':'保存';
+        let title=this.isRemoveKey? '标签移除':'自定义标签';
+        title=this.props.flag=FLAG_LANGUAGE.flag_language?'自定义语言':title;
         let navigationBar =
             <NavigationBar
                 title={title}
