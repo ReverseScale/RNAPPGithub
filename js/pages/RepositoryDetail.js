@@ -29,7 +29,6 @@ export default class RepositoryDetail extends Component {
         }
     }
 
-
     onBack() {
         if (this.state.canGoBack) {
             this.webView.goBack();
