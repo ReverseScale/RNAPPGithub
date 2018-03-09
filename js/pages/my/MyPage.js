@@ -32,7 +32,10 @@ export default class MyPage extends Component {
                     onPress={()=>{
                         this.props.navigator.push({
                             component:CustomKeyPage,
-                            params:{...this.props}
+                            params:{
+                                ...this.props,
+                                flag:FLAG_LANGUAGE.flag_key,
+                            }
                         })
                     }}
                 >
@@ -59,7 +62,10 @@ export default class MyPage extends Component {
                     onPress={()=>{
                         this.props.navigator.push({
                             component:SortKeyPagePage,
-                            params:{...this.props}
+                            params:{
+                                ...this.props,
+                                flag:FLAG_LANGUAGE.flag_key,
+                            }
                         })
                     }}
                 >
@@ -80,13 +86,17 @@ export default class MyPage extends Component {
                 >
                     语言排序
                 </Text>
-                
+
                 <Text
                     style={styles.tips}
                     onPress={()=>{
                         this.props.navigator.push({
                             component:CustomKeyPage,
-                            params:{...this.props,isRemoveKey:true}
+                            params:{
+                                ...this.props,
+                                isRemoveKey:true,
+                                flag:FLAG_LANGUAGE.flag_key,
+                            }
                         })
                     }}
                 >
