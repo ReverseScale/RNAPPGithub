@@ -22,7 +22,7 @@ import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import FavoriteDao from "../expand/dao/FavoriteDao"
 import RepositoryDetail from './RepositoryDetail'
 import Popover from '../common/Popover'
-import ProjectModel from "../model/ProjectModel";
+import ProjectModel from "../model/ProjectModel"
 import Utils from '../util/Utils'
 import TimeSpan from '../model/TimeSpan'
 const API_URL = 'https://github.com/trending/'
@@ -292,7 +292,7 @@ class TrendingTab extends Component {
 
     renderRow(projectModel) {
         return <TrendingRepoCell
-                key={projectModel.item.id}
+                key={projectModel.item.fullName}
                 projectModel={projectModel}
                 onSelect={()=>this.onSelectRepository(projectModel)}
                 onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}/>
