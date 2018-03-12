@@ -1,3 +1,7 @@
+/**
+ * Created by penn on 2016/12/21.
+ */
+
 import React, {Component} from 'react';
 import {
     StyleSheet,
@@ -13,15 +17,19 @@ import {
 import NavigationBar from '../common/NavigationBar'
 import DataRepository,{FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
-import TrendingCell from '../common/TrendingCell'
+import TrendingRepoCell from '../common/TrendingRepoCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
+import FavoriteDao from "../expand/dao/FavoriteDao"
 import RepositoryDetail from './RepositoryDetail'
 import Popover from '../common/Popover'
+import ProjectModel from "../model/ProjectModel";
+import Utils from '../util/Utils'
 import TimeSpan from '../model/TimeSpan'
 const API_URL = 'https://github.com/trending/'
 var timeSpanTextArray = [new TimeSpan('今 天', 'since=daily'),
     new TimeSpan('本 周', 'since=weekly'), new TimeSpan('本 月', 'since=monthly')]
-
+var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending)
+var dataRepository = new DataRepository(FLAG_STORAGE.flag_trending);
 export default class TrendingPage extends Component {
     constructor(props) {
         super(props);
@@ -142,23 +150,37 @@ export default class TrendingPage extends Component {
 class TrendingTab extends Component {
     constructor(props) {
         super(props);
-        this.dataRepository = new DataRepository(FLAG_STORAGE.flag_trending);
         this.isRender = true;
+        this.isFavoriteChanged=false;
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2}),
             isLoading: false,
+            favoriteKeys: [],
         }
     }
 
     componentDidMount() {
+        this.listener = DeviceEventEmitter.addListener('favoriteChanged_trending', () => {
+            this.isFavoriteChanged=true;
+        });
         this.loadData(this.props.timeSpan);
+    }
+    componentWillUnmount(){
+        if (this.listener) {
+            this.listener.remove();
+        }
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.timeSpan !== this.props.timeSpan) {
             this.loadData(nextProps.timeSpan);
+        }else if(this.isFavoriteChanged){
+            this.isFavoriteChanged=false;
+            this.getFavoriteKeys();
         }
     }
-
+    onUpdateFavorite() {
+        this.getFavoriteKeys();
+    }
     shouldComponentUpdate(nextProps, nextState) {
         if (this.isRender) {
             this.isRender = false;
@@ -170,63 +192,110 @@ class TrendingTab extends Component {
     onRefresh(){
         this.loadData(this.props.timeSpan,true);
     }
+    /**
+     * 更新ProjectItem的Favorite状态
+     */
+    flushFavoriteState() {
+        let projectModels = [];
+        let items = this.items;
+        for (var i = 0, len = items.length; i < len; i++) {
+            projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i],this.state.favoriteKeys)));
+        }
+        this.updateState({
+            isLoading: false,
+            isLoadingFail: false,
+            dataSource: this.getDataSource(projectModels),
+        });
+    }
+
+    /**
+     * 获取本地用户收藏的ProjectItem
+     */
+    getFavoriteKeys() {
+        favoriteDao.getFavoriteKeys().then((keys)=> {
+            if (keys) {
+                this.updateState({favoriteKeys: keys});
+            }
+            this.flushFavoriteState();
+        }).catch((error)=> {
+            this.flushFavoriteState();
+            console.log(error);
+        });
+    }
+    updateState(dic) {
+        if (!this)return;
+        this.setState(dic);
+    }
     loadData(timeSpan,isRefresh) {
         this.updateState({
             isLoading: true
         })
         let url=this.genFetchUrl(timeSpan,this.props.tabLabel);
-        this.dataRepository
+        dataRepository
             .fetchRepository(url)
             .then(result=> {
-                let items=result && result.items ? result.items : result ? result : [];
-                this.updateState({
-                    dataSource: this.state.dataSource.cloneWithRows(items),
-                    isLoading: false
-                });
-                DeviceEventEmitter.emit('showToast', '显示缓存数据');
-                if(!items||isRefresh&&result && result.update_date && !this.dataRepository.checkDate(result.update_date)){
-                    return this.dataRepository.fetchNetRepository(url);
+                this.items=result && result.items ? result.items : result ? result : [];
+                this.getFavoriteKeys();
+                if(!this.items||isRefresh&&result && result.update_date && !dataRepository.checkDate(result.update_date)){
+                    return dataRepository.fetchNetRepository(url);
                 }
             })
             .then((items)=> {
                 if (!items || items.length === 0)return;
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(items),
-                });
-                DeviceEventEmitter.emit('showToast', '显示网络数据');
+                this.items = items;
+                this.getFavoriteKeys();
             })
             .catch(error=> {
                 console.log(error);
-                this.setState({
+                this.updateState({
                     isLoading: false
                 });
             })
+    }
+    getDataSource(items) {
+        return this.state.dataSource.cloneWithRows(items);
     }
     updateState(dic){
         if (!this)return;
         this.isRender=true;
         this.setState(dic);
     }
-    onSelectRepository(item) {
+    onSelectRepository(projectModel) {
+        var item = projectModel.item;
         this.props.navigator.push({
-            title: item.full_name,
+            title: item.fullName,
             component: RepositoryDetail,
             params: {
-                item: item,
-                ...this.props
+                projectModel: projectModel,
+                parentComponent: this,
+                flag: FLAG_STORAGE.flag_trending,
+                ...this.props,
+                onUpdateFavorite:()=>this.onUpdateFavorite(),
             },
         });
+    }
+    /**
+     * favoriteIcon单击回调函数
+     * @param item
+     * @param isFavorite
+     */
+    onFavorite(item, isFavorite) {
+        if (isFavorite) {
+            favoriteDao.saveFavoriteItem(item.fullName, JSON.stringify(item));
+        } else {
+            favoriteDao.removeFavoriteItem(item.fullName);
+        }
     }
     genFetchUrl(timeSpan, category) {//objective-c?since=daily
         return API_URL + category + '?' + timeSpan.searchText;
     }
 
-    renderRow(data) {
-        return <TrendingCell
-            key={data.id}
-            data={data}
-            onSelect={()=>this.onSelectRepository(data)}
-        />
+    renderRow(projectModel) {
+        return <TrendingRepoCell
+                key={projectModel.item.id}
+                projectModel={projectModel}
+                onSelect={()=>this.onSelectRepository(projectModel)}
+                onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}/>
     }
 
     render() {

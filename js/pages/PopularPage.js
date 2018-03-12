@@ -1,6 +1,6 @@
-/**
- * Created by penn on 2016/12/21.
- */
+// /**
+//  * Created by penn on 2016/12/21.
+//  */
 
 import React, {Component} from 'react';
 import {
@@ -19,15 +19,21 @@ import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-v
 import RepositoryCell from '../common/RepositoryCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import RepositoryDetail from './RepositoryDetail'
+import FavoriteDao from '../expand/dao/FavoriteDao'
+import ProjectModel from '../model/ProjectModel'
+import Utils from '../util/Utils'
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
+
+var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
+var dataRepository = new DataRepository(FLAG_STORAGE.flag_popular);
+
 export default class PopularPage extends Component {
     constructor(props) {
         super(props);
         this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
         this.state = {
-            result: '',
             languages: [],
         }
         this.loadLanguage();
@@ -79,73 +85,130 @@ export default class PopularPage extends Component {
 class PopularTab extends Component {
     constructor(props) {
         super(props);
-        this.dataRepository = new DataRepository(FLAG_STORAGE.flag_popular);
+        this.isFavoriteChanged=false;
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2}),
             isLoading: false,
+            favoriteKeys: [],
         }
     }
 
     componentDidMount() {
+        this.listener = DeviceEventEmitter.addListener('favoriteChanged_popular', () => {
+            this.isFavoriteChanged=true;
+        });
         this.loadData();
     }
+    componentWillUnmount(){
+        if (this.listener) {
+            this.listener.remove();
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if(this.isFavoriteChanged){
+            this.isFavoriteChanged=false;
+            this.getFavoriteKeys();
+        }
+    }
+    /**
+     * 更新ProjectItem的Favorite状态
+     */
+    flushFavoriteState() {
+        let projectModels = [];
+        let items = this.items;
+        for (var i = 0, len = items.length; i < len; i++) {
+            projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i],this.state.favoriteKeys)));
+        }
+        this.updateState({
+            isLoading: false,
+            isLoadingFail: false,
+            dataSource: this.getDataSource(projectModels),
+        });
+    }
 
+    /**
+     * 获取本地用户收藏的ProjectItem
+     */
+    getFavoriteKeys() {
+        favoriteDao.getFavoriteKeys().then((keys)=> {
+            if (keys) {
+                this.updateState({favoriteKeys: keys});
+            }
+            this.flushFavoriteState();
+        }).catch((error)=> {
+            this.flushFavoriteState();
+            console.log(error);
+        });
+    }
+    updateState(dic) {
+        if (!this)return;
+        this.setState(dic);
+    }
     loadData() {
-        this.setState({
+        this.updateState({
             isLoading: true
         })
         let url=this.genFetchUrl(this.props.tabLabel);
-
-        this.dataRepository
+        dataRepository
             .fetchRepository(url)
             .then(result=> {
-                let items=result && result.items ? result.items : result ? result : [];
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(items),
-                    isLoading: false
-                });
-                DeviceEventEmitter.emit('showToast', '显示缓存数据');
-                if (result && result.update_date && !this.dataRepository.checkDate(result.update_date)) {
-                    return this.dataRepository.fetchNetRepository(url);
-                }
+                this.items=result && result.items ? result.items : result ? result : [];
+                this.getFavoriteKeys();
+                if (result && result.update_date && !dataRepository.checkDate(result.update_date))return dataRepository.fetchNetRepository(url);
             })
             .then((items)=> {
                 if (!items || items.length === 0)return;
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(items),
-                });
-                DeviceEventEmitter.emit('showToast', '显示网络数据');
-                console.log(e);
+                this.items = items;
+                this.getFavoriteKeys();
             })
             .catch(error=> {
                 console.log(error);
-                this.setState({
+                this.updateState({
                     isLoading: false
                 });
             })
     }
-    onSelectRepository(item) {
+    getDataSource(items) {
+        return this.state.dataSource.cloneWithRows(items);
+    }
+    onSelectRepository(projectModel) {
+        var item = projectModel.item;
         this.props.navigator.push({
             title: item.full_name,
             component: RepositoryDetail,
             params: {
-                item: item,
+                projectModel: projectModel,
+                parentComponent: this,
+                flag: FLAG_STORAGE.flag_popular,
                 ...this.props
             },
         });
     }
+    /**
+     * favoriteIcon单击回调函数
+     * @param item
+     * @param isFavorite
+     */
+    onFavorite(item, isFavorite) {
+        if (isFavorite) {
+            favoriteDao.saveFavoriteItem(item.id.toString(), JSON.stringify(item));
+        } else {
+            favoriteDao.removeFavoriteItem(item.id.toString());
+        }
+    }
     genFetchUrl(key) {
         return URL + key + QUERY_STR;
     }
-
-    renderRow(data) {
+    renderRow(projectModel) {
         return <RepositoryCell
-            key={data.id}
-            data={data}
-            onSelect={()=>this.onSelectRepository(data)}
-        />
-    }
+            key={projectModel.item.id}
+            projectModel={projectModel}
+            onSelect={()=>this.onSelectRepository(projectModel)}
+            onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}/>
 
+
+
+    }
     render() {
         return <View style={styles.container}>
             <ListView

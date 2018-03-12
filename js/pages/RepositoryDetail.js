@@ -16,12 +16,11 @@ export default class RepositoryDetail extends Component {
     constructor(props) {
         super(props);
 
-        this.url = this.props.item.html_url ? this.props.item.html_url
-            : TRENDING_URL + this.props.item.fullName;
-        var title = this.props.item.full_name ? this.props.item.full_name
-            : this.props.item.fullName;
-        // debugger;
-        // console.log('测试~~~~~~~~~~');
+        this.url = this.props.projectModel.item.html_url ? this.props.projectModel.item.html_url
+            : TRENDING_URL + this.props.projectModel.item.fullName;
+        var title = this.props.projectModel.item.full_name ? this.props.projectModel.item.full_name
+            : this.props.projectModel.item.fullName;
+
         this.state = {
             url: this.url,
             canGoBack: false,

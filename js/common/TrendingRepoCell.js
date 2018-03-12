@@ -1,14 +1,22 @@
+/**
+ *
+ *
+ * @flow
+ */
+'use strict';
 
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
-    View,
+    Image,
+    Platform,
     StyleSheet,
     Text,
     TouchableOpacity,
-    Image,
+    View,
+    Alert,
 } from 'react-native'
-
-export default class RepositoryCell extends Component {
+import HTMLView from 'react-native-htmlview'
+export default class TrendingRepoCell extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +25,7 @@ export default class RepositoryCell extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {//当从当前页面切换走，再切换回来后
         this.setFavoriteState(nextProps.projectModel.isFavorite)
     }
 
@@ -33,6 +41,7 @@ export default class RepositoryCell extends Component {
         this.setFavoriteState(!this.state.isFavorite)
         this.props.onFavorite(this.props.projectModel.item, !this.state.isFavorite)
     }
+
     render() {
         let item = this.props.projectModel.item? this.props.projectModel.item:this.props.projectModel;
         let favoriteButton=this.props.projectModel.item?
@@ -44,25 +53,37 @@ export default class RepositoryCell extends Component {
                     style={[{width: 22, height: 22,},{tintColor:"#2196F3"}]}
                     source={this.state.favoriteIcon}/>
             </TouchableOpacity>:null;
+        var description='<p>'+item.description+'</p>';
         return (
             <TouchableOpacity
                 onPress={this.props.onSelect}
                 style={styles.container}
             >
                 <View style={styles.cell_container}>
-                    <Text style={styles.title}>{item.full_name}</Text>
-                    <Text style={styles.description}>{item.description}</Text>
+                    <Text style={styles.title}>{item.fullName}</Text>
+                    <HTMLView
+                        value={description}
+                        onLinkPress={(url) => {
+                        }}
+                        stylesheet={{
+                            p:styles.description,
+                            a:styles.description,
+                        }}
+                    />
+                    <Text style={[styles.description, {fontSize: 14}]}>
+                        {item.meta}
+                    </Text>
                     <View style={styles.row}>
-                        <View style={styles.row}>
-                            <Text>Author:</Text>
-                            <Image
-                                style={{height: 22, width: 22}}
-                                source={{uri: item.owner.avatar_url}}
-                            />
-                        </View>
-                        <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-                            <Text>Star:</Text>
-                            <Text>{item.stargazers_count}</Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={styles.author}>Built by  </Text>
+                            {item.contributors.map((result, i, arr) => {
+                                return <Image
+                                    key={i}
+                                    style={{width: 22, height: 22,margin:2}}
+                                    source={{uri: arr[i]}}
+                                />
+                            })
+                            }
                         </View>
                         {favoriteButton}
                     </View>
@@ -109,8 +130,10 @@ const styles = StyleSheet.create({
         shadowRadius: 1,
         elevation:2
     },
+    author: {
+        fontSize: 14,
+        marginBottom: 2,
+        color: '#757575'
+    },
 })
-
-
-
 
