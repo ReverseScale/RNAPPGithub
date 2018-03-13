@@ -1,6 +1,6 @@
-// /**
-//  * Created by penn on 2016/12/21.
-//  */
+/**
+ * Created by penn on 2016/12/21.
+ */
 
 import React, {Component} from 'react';
 import {
@@ -22,13 +22,10 @@ import RepositoryDetail from './RepositoryDetail'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
 import Utils from '../util/Utils'
-
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
-
 var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 var dataRepository = new DataRepository(FLAG_STORAGE.flag_popular);
-
 export default class PopularPage extends Component {
     constructor(props) {
         super(props);

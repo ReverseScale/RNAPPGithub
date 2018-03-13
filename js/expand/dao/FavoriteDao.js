@@ -32,7 +32,6 @@ export default class FavoriteDao{
   }
   /**
    * 更新Favorite key集合
-   * @param key
    * @param isAdd true 添加,false 删除
    * **/
   updateFavoriteKeys(key,isAdd){
@@ -86,7 +85,7 @@ export default class FavoriteDao{
   }
 
   /**
-   * 获取所有收藏的项目
+   * 获取所以收藏的项目
    * @return {Promise}
    */
   getAllItems() {
