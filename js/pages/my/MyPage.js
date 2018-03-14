@@ -18,6 +18,9 @@ import NavigationBar from '../../../js/common/NavigationBar'
 import {MORE_MENU} from "../../common/MoreMenu";
 import GlobalStyles from '../../../res/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
+
+import AboutPage from '../about/AboutPage'
+import AboutMePage from '../about/AboutMePage'
 export default class MyPage extends Component {
     constructor(props) {
         super(props);

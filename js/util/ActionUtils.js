@@ -1,7 +1,7 @@
 import {
     DeviceEventEmitter,
 } from 'react-native';
-import RepositoryDetail from '../page/RepositoryDetail'
+import RepositoryDetail from '../pages/RepositoryDetail'
 export default class ActionUtils {
     /**
      * 跳转到详情页
