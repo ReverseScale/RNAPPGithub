@@ -54,7 +54,7 @@ export default class AboutCommon {
     }
 
     /**
-     * 通知数据发生改变
+     * 通知数据发生改变(通知可能需要重新打包装载)
      * @param items 改变的数据
      */
     onNotifyDataChanged(items) {
