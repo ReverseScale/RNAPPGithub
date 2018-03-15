@@ -5,26 +5,28 @@
 import {
     AsyncStorage,
 } from 'react-native';
-
 import Trending from "GitHubTrending";
-
-export var FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending'}
+export var FLAG_STORAGE = {flag_popular: 'popular', flag_trending: 'trending', flag_my: 'my'}
 
 export default class DataRepository {
     constructor(flag) {
         this.flag = flag;
-        if(flag===FLAG_STORAGE.flag_trending)this.treding=new Trending();
+        if (flag === FLAG_STORAGE.flag_trending)this.treding = new Trending();
     }
-    // 保存进数据库中
+
     saveRepository(url, items, callback) {
         if (!items || !url)return;
-        let wrapData = {items: items, update_date: new Date().getTime()};
+        let wrapData;
+        if (this.flag === FLAG_STORAGE.flag_my) {
+            wrapData = {item: items, update_date: new Date().getTime()};
+        } else {
+            wrapData = {items: items, update_date: new Date().getTime()};
+        }
         AsyncStorage.setItem(url, JSON.stringify(wrapData), callback);
     }
 
     fetchRepository(url) {
         return new Promise((resolve, reject)=> {
-            // 获取本地数据
             this.fetchLocalRepository(url).then((wrapData)=> {
                 if (wrapData) {
                     resolve(wrapData, true);
@@ -46,11 +48,6 @@ export default class DataRepository {
         })
     }
 
-    /**
-     * 获取本地数据
-     * @param url
-     * @returns {Promise<any>}
-     */
     fetchLocalRepository(url) {
         return new Promise((resolve, reject)=> {
             AsyncStorage.getItem(url, (error, result)=> {
@@ -69,22 +66,24 @@ export default class DataRepository {
         })
     }
 
-    // 获取网络数据
     fetchNetRepository(url) {
         return new Promise((resolve, reject)=> {
-            if (this.flag === FLAG_STORAGE.flag_popular) {
+            if (this.flag !== FLAG_STORAGE.flag_trending) {
                 fetch(url)
                     .then((response)=>response.json())
                     .catch((error)=> {
                         reject(error);
                     }).then((responseData)=> {
-                    if (!responseData||!responseData.items) {
+                    if (this.flag === FLAG_STORAGE.flag_my && responseData) {
+                        this.saveRepository(url, responseData)
+                        resolve(responseData);
+                    } else if (responseData && responseData.items) {
+                        this.saveRepository(url, responseData.items)
+                        resolve(responseData.items);
+                    } else {
                         reject(new Error('responseData is null'));
-                        return;
                     }
-                    resolve(responseData.items);
-                    this.saveRepository(url,responseData.items)
-                }).done();
+                })
             } else {
                 this.treding.fetchTrending(url)
                     .then((items)=> {
@@ -93,28 +92,11 @@ export default class DataRepository {
                             return;
                         }
                         resolve(items);
-                        this.saveRepository(url,items)
+                        this.saveRepository(url, items)
                     }).catch((error)=> {
                     reject(error);
                 })
             }
         })
-    }
-
-    /**
-     * 检查数据过期
-     * @param longTime
-     * @returns {boolean}
-     */
-    checkDate(longTime) {
-        return false;
-        let currentDate = new Date();
-        let targetDate = new Date();
-        targetDate.setTime(longTime);
-        if (currentDate.getMonth() !== targetDate.getMonth())return false;
-        if (currentDate.getDate() !== targetDate.getDate())return false;
-        if (currentDate.getHours() - targetDate.getHours() > 4)return false;
-        // if (currentDate.getMinutes() - targetDate.getMinutes() > 1)return false;
-        return true;
     }
 }
