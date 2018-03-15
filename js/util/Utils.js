@@ -17,7 +17,7 @@ export default class Utils {
     /**
      * 检查项目更新时间
      * @param longTime 项目更新时间
-     * @return {boolean} true 不需要更新,false需要更新
+     * @return {boolean} true 不需要更新,false 需要更新
      */
     static checkDate(longTime) {
         return false;
