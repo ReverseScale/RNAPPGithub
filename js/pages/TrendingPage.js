@@ -20,10 +20,10 @@ import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-v
 import TrendingRepoCell from '../common/TrendingRepoCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import FavoriteDao from "../expand/dao/FavoriteDao"
-import RepositoryDetail from './RepositoryDetail'
 import Popover from '../common/Popover'
 import ProjectModel from "../model/ProjectModel";
 import Utils from '../util/Utils'
+import ActionUtils from '../util/ActionUtils'
 import TimeSpan from '../model/TimeSpan'
 const API_URL = 'https://github.com/trending/'
 var timeSpanTextArray = [new TimeSpan('今 天', 'since=daily'),
@@ -236,7 +236,7 @@ class TrendingTab extends Component {
             .then(result=> {
                 this.items=result && result.items ? result.items : result ? result : [];
                 this.getFavoriteKeys();
-                if(!this.items||isRefresh&&result && result.update_date && !dataRepository.checkDate(result.update_date)){
+                if(!this.items||isRefresh&&result && result.update_date && !Utils.checkDate(result.update_date)){
                     return dataRepository.fetchNetRepository(url);
                 }
             })
@@ -260,20 +260,6 @@ class TrendingTab extends Component {
         this.isRender=true;
         this.setState(dic);
     }
-    onSelectRepository(projectModel) {
-        var item = projectModel.item;
-        this.props.navigator.push({
-            title: item.fullName,
-            component: RepositoryDetail,
-            params: {
-                projectModel: projectModel,
-                parentComponent: this,
-                flag: FLAG_STORAGE.flag_trending,
-                ...this.props,
-                onUpdateFavorite:()=>this.onUpdateFavorite(),
-            },
-        });
-    }
     /**
      * favoriteIcon单击回调函数
      * @param item
@@ -294,7 +280,12 @@ class TrendingTab extends Component {
         return <TrendingRepoCell
                 key={projectModel.item.id}
                 projectModel={projectModel}
-                onSelect={()=>this.onSelectRepository(projectModel)}
+                onSelect={()=>ActionUtils.onSelectRepository({
+                    projectModel:projectModel,
+                    flag:FLAG_STORAGE.flag_trending,
+                    onUpdateFavorite:()=>this.onUpdateFavorite(),
+                    ...this.props
+                })}
                 onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}/>
     }
 

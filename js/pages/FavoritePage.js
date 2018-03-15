@@ -18,9 +18,9 @@ import {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import RepositoryCell from '../common/RepositoryCell'
 import TrendingRepoCell from '../common/TrendingRepoCell'
-import RepositoryDetail from './RepositoryDetail'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
+import ActionUtils from '../util/ActionUtils'
 import ArrayUtils from '../util/ArrayUtils'
 export default class FavoritePage extends Component {
     constructor(props) {
@@ -102,21 +102,6 @@ class FavoriteTab extends Component {
     getDataSource(items) {
         return this.state.dataSource.cloneWithRows(items);
     }
-
-    onSelectRepository(projectModel) {
-        var belongNavigator = this.props.navigator ? this.props.navigator : this.props.homeComponent.refs.navFavorite;
-        var item = projectModel.item;
-        belongNavigator.push({
-            title: item.full_name,
-            component: RepositoryDetail,
-            params: {
-                projectModel: projectModel,
-                flag: this.props.flag,
-                ...this.props
-            },
-        });
-    }
-
     onFavorite(item, isFavorite) {
         var key = this.props.flag === FLAG_STORAGE.flag_popular ? item.id.toString() : item.fullName;
         if (isFavorite) {
@@ -143,7 +128,12 @@ class FavoriteTab extends Component {
                 onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}
                 isFavorite={true}
                 {...{navigator}}
-                onSelect={()=>this.onSelectRepository(projectModel)}
+                onSelect={()=>ActionUtils.onSelectRepository({
+                    projectModel:projectModel,
+                    projectModel: projectModel,
+                    flag: this.props.flag,
+                    ...this.props
+                })}
                 projectModel={projectModel}/>
         );
     }

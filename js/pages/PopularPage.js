@@ -11,17 +11,19 @@ import {
     TextInput,
     ListView,
     RefreshControl,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    TouchableOpacity,
 } from 'react-native';
 import NavigationBar from '../common/NavigationBar'
 import DataRepository,{FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import RepositoryCell from '../common/RepositoryCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
-import RepositoryDetail from './RepositoryDetail'
+import SearchPage from './SearchPage'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
 import Utils from '../util/Utils'
+import ActionUtils from '../util/ActionUtils'
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
@@ -50,12 +52,36 @@ export default class PopularPage extends Component {
 
         });
     }
-
+    renderRightButton() {
+        return (
+            <View style={{flexDirection: 'row',}}>
+                <TouchableOpacity
+                    ref='button'
+                    underlayColor='transparent'
+                    onPress={()=>{
+                        this.props.navigator.push({
+                            component: SearchPage,
+                            params: {
+                                theme:this.state.theme,
+                                ...this.props,
+                            },
+                        });
+                    }}>
+                    <View style={{padding:5,marginRight:8}}>
+                        <Image
+                            style={{width: 24, height: 24}}
+                            source={require('../../res/images/ic_search_white_48pt.png')}
+                        />
+                    </View>
+                </TouchableOpacity>
+            </View>)
+    }
     render() {
         let navigationBar =
             <NavigationBar
                 title={'最热'}
                 statusBar={{backgroundColor: "#2196F3"}}
+                rightButton={this.renderRightButton()}
             />;
         let content = this.state.languages.length > 0 ?
             <ScrollableTabView
@@ -151,7 +177,7 @@ class PopularTab extends Component {
             .then(result=> {
                 this.items=result && result.items ? result.items : result ? result : [];
                 this.getFavoriteKeys();
-                if (result && result.update_date && !dataRepository.checkDate(result.update_date))return dataRepository.fetchNetRepository(url);
+                if (result && result.update_date && !Utils.checkDate(result.update_date))return dataRepository.fetchNetRepository(url);
             })
             .then((items)=> {
                 if (!items || items.length === 0)return;
@@ -167,19 +193,6 @@ class PopularTab extends Component {
     }
     getDataSource(items) {
         return this.state.dataSource.cloneWithRows(items);
-    }
-    onSelectRepository(projectModel) {
-        var item = projectModel.item;
-        this.props.navigator.push({
-            title: item.full_name,
-            component: RepositoryDetail,
-            params: {
-                projectModel: projectModel,
-                parentComponent: this,
-                flag: FLAG_STORAGE.flag_popular,
-                ...this.props
-            },
-        });
     }
     /**
      * favoriteIcon单击回调函数
@@ -200,11 +213,8 @@ class PopularTab extends Component {
         return <RepositoryCell
             key={projectModel.item.id}
             projectModel={projectModel}
-            onSelect={()=>this.onSelectRepository(projectModel)}
+            onSelect={()=>ActionUtils.onSelectRepository({projectModel:projectModel,flag:FLAG_STORAGE.flag_popular,...this.props})}
             onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}/>
-
-
-
     }
     render() {
         return <View style={styles.container}>
