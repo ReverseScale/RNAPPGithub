@@ -15,6 +15,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import NavigationBar from '../common/NavigationBar'
+import ActionUtils from '../util/ActionUtils'
 import DataRepository,{FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import TrendingRepoCell from '../common/TrendingRepoCell'
@@ -23,7 +24,6 @@ import FavoriteDao from "../expand/dao/FavoriteDao"
 import Popover from '../common/Popover'
 import ProjectModel from "../model/ProjectModel";
 import Utils from '../util/Utils'
-import ActionUtils from '../util/ActionUtils'
 import TimeSpan from '../model/TimeSpan'
 const API_URL = 'https://github.com/trending/'
 var timeSpanTextArray = [new TimeSpan('今 天', 'since=daily'),
@@ -260,18 +260,6 @@ class TrendingTab extends Component {
         this.isRender=true;
         this.setState(dic);
     }
-    /**
-     * favoriteIcon单击回调函数
-     * @param item
-     * @param isFavorite
-     */
-    onFavorite(item, isFavorite) {
-        if (isFavorite) {
-            favoriteDao.saveFavoriteItem(item.fullName, JSON.stringify(item));
-        } else {
-            favoriteDao.removeFavoriteItem(item.fullName);
-        }
-    }
     genFetchUrl(timeSpan, category) {//objective-c?since=daily
         return API_URL + category + '?' + timeSpan.searchText;
     }
@@ -282,11 +270,11 @@ class TrendingTab extends Component {
                 projectModel={projectModel}
                 onSelect={()=>ActionUtils.onSelectRepository({
                     projectModel:projectModel,
-                    flag:FLAG_STORAGE.flag_trending,
+                    flag: FLAG_STORAGE.flag_trending,
+                    ...this.props,
                     onUpdateFavorite:()=>this.onUpdateFavorite(),
-                    ...this.props
                 })}
-                onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}/>
+                onFavorite={(item, isFavorite)=>ActionUtils.onFavorite(favoriteDao,item, isFavorite,FLAG_STORAGE.flag_trending)}/>
     }
 
     render() {

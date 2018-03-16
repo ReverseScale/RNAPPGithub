@@ -12,18 +12,18 @@ import {
     ListView,
     RefreshControl,
     DeviceEventEmitter,
-    TouchableOpacity,
+    TouchableOpacity
 } from 'react-native';
 import NavigationBar from '../common/NavigationBar'
-import DataRepository,{FLAG_STORAGE} from '../expand/dao/DataRepository'
+import ActionUtils from '../util/ActionUtils'
+import DataRepository, {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import RepositoryCell from '../common/RepositoryCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
-import SearchPage from './SearchPage'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
+import SearchPage from './SearchPage'
 import Utils from '../util/Utils'
-import ActionUtils from '../util/ActionUtils'
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
@@ -52,30 +52,30 @@ export default class PopularPage extends Component {
 
         });
     }
+
     renderRightButton() {
-        return (
-            <View style={{flexDirection: 'row',}}>
-                <TouchableOpacity
-                    ref='button'
-                    underlayColor='transparent'
-                    onPress={()=>{
-                        this.props.navigator.push({
-                            component: SearchPage,
-                            params: {
-                                theme:this.state.theme,
-                                ...this.props,
-                            },
-                        });
-                    }}>
-                    <View style={{padding:5,marginRight:8}}>
-                        <Image
-                            style={{width: 24, height: 24}}
-                            source={require('../../res/images/ic_search_white_48pt.png')}
-                        />
-                    </View>
-                </TouchableOpacity>
-            </View>)
+        return <View>
+            <TouchableOpacity
+                onPress={()=> {
+                    this.props.navigator.push({
+                        component:SearchPage,
+                        params:{
+                            ...this.props
+                        }
+                    })
+                }}
+            >
+                <View style={{padding:5,marginRight:8}}>
+                    <Image
+                        style={{width:24,height:24}}
+                        source={require('../../res/images/ic_search_white_48pt.png')}
+                    />
+                </View>
+
+            </TouchableOpacity>
+        </View>
     }
+
     render() {
         let navigationBar =
             <NavigationBar
@@ -108,7 +108,7 @@ export default class PopularPage extends Component {
 class PopularTab extends Component {
     constructor(props) {
         super(props);
-        this.isFavoriteChanged=false;
+        this.isFavoriteChanged = false;
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2}),
             isLoading: false,
@@ -118,21 +118,24 @@ class PopularTab extends Component {
 
     componentDidMount() {
         this.listener = DeviceEventEmitter.addListener('favoriteChanged_popular', () => {
-            this.isFavoriteChanged=true;
+            this.isFavoriteChanged = true;
         });
         this.loadData();
     }
-    componentWillUnmount(){
+
+    componentWillUnmount() {
         if (this.listener) {
             this.listener.remove();
         }
     }
+
     componentWillReceiveProps(nextProps) {
-        if(this.isFavoriteChanged){
-            this.isFavoriteChanged=false;
+        if (this.isFavoriteChanged) {
+            this.isFavoriteChanged = false;
             this.getFavoriteKeys();
         }
     }
+
     /**
      * 更新ProjectItem的Favorite状态
      */
@@ -140,7 +143,7 @@ class PopularTab extends Component {
         let projectModels = [];
         let items = this.items;
         for (var i = 0, len = items.length; i < len; i++) {
-            projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i],this.state.favoriteKeys)));
+            projectModels.push(new ProjectModel(items[i], Utils.checkFavorite(items[i], this.state.favoriteKeys)));
         }
         this.updateState({
             isLoading: false,
@@ -163,19 +166,21 @@ class PopularTab extends Component {
             console.log(error);
         });
     }
+
     updateState(dic) {
         if (!this)return;
         this.setState(dic);
     }
+
     loadData() {
         this.updateState({
             isLoading: true
         })
-        let url=this.genFetchUrl(this.props.tabLabel);
+        let url = this.genFetchUrl(this.props.tabLabel);
         dataRepository
             .fetchRepository(url)
             .then(result=> {
-                this.items=result && result.items ? result.items : result ? result : [];
+                this.items = result && result.items ? result.items : result ? result : [];
                 this.getFavoriteKeys();
                 if (result && result.update_date && !Utils.checkDate(result.update_date))return dataRepository.fetchNetRepository(url);
             })
@@ -191,31 +196,28 @@ class PopularTab extends Component {
                 });
             })
     }
+
     getDataSource(items) {
         return this.state.dataSource.cloneWithRows(items);
-    }
-    /**
-     * favoriteIcon单击回调函数
-     * @param item
-     * @param isFavorite
-     */
-    onFavorite(item, isFavorite) {
-        if (isFavorite) {
-            favoriteDao.saveFavoriteItem(item.id.toString(), JSON.stringify(item));
-        } else {
-            favoriteDao.removeFavoriteItem(item.id.toString());
-        }
     }
     genFetchUrl(key) {
         return URL + key + QUERY_STR;
     }
+
     renderRow(projectModel) {
         return <RepositoryCell
             key={projectModel.item.id}
             projectModel={projectModel}
-            onSelect={()=>ActionUtils.onSelectRepository({projectModel:projectModel,flag:FLAG_STORAGE.flag_popular,...this.props})}
-            onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}/>
+            onSelect={()=>ActionUtils.onSelectRepository({
+                projectModel: projectModel,
+                flag: FLAG_STORAGE.flag_popular,
+                ...this.props
+            })}
+            onFavorite={(item, isFavorite)=>ActionUtils.onFavorite(favoriteDao,item, isFavorite)}/>
+
+
     }
+
     render() {
         return <View style={styles.container}>
             <ListView
