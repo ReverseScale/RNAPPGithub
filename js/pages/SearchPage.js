@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     textInput: {
         flex: 1,
         height: (Platform.OS === 'ios') ? 30 : 40,
-        borderWidth: 1,
+        borderWidth: (Platform.OS === 'ios') ? 1 : 0,
         borderColor: 'white',
         alignSelf: 'center',
         paddingLeft: 5,
