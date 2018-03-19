@@ -124,7 +124,6 @@ export default class SearchPage extends Component {
     loadData(){
         this.updateState({
             isLoading:true,
-
         })
         this.cancelable=makeCancelable(fetch(this.genFetchUrl(this.inputKeky)));
         this.cancelable.promise
