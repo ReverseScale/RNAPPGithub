@@ -22,6 +22,9 @@ import TrendingRepoCell from '../common/TrendingRepoCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import FavoriteDao from "../expand/dao/FavoriteDao"
 import Popover from '../common/Popover'
+import ViewUtils from '../util/ViewUtils'
+import {FLAG_TAB} from './HomePage'
+import MoreMenu,{MORE_MENU} from '../common/MoreMenu'
 import ProjectModel from "../model/ProjectModel";
 import Utils from '../util/Utils'
 import TimeSpan from '../model/TimeSpan'
@@ -56,6 +59,16 @@ export default class TrendingPage extends Component {
         }).catch((error)=> {
 
         });
+    }
+    renderMoreView(){
+        let params={...this.props,fromPage:FLAG_TAB.flag_popularTab}
+        return <MoreMenu
+            ref="moreMenu"
+            {...params}
+            menus={[MORE_MENU.Custom_Language,MORE_MENU.Sort_Language,MORE_MENU.Custom_Theme,
+                MORE_MENU.About_Author,MORE_MENU.About]}
+            anchorView={()=>this.refs.moreMenuButton}
+        />
     }
     showPopover() {
         this.refs.button.measure((ox, oy, width, height, px, py) => {
@@ -102,6 +115,7 @@ export default class TrendingPage extends Component {
             <NavigationBar
                 titleView={this.renderTitleView()}
                 statusBar={{backgroundColor: "#2196F3"}}
+                rightButton={ViewUtils.getMoreButton(()=>this.refs.moreMenu.open())}
             />;
         let timeSpanView=
             <Popover
@@ -144,6 +158,7 @@ export default class TrendingPage extends Component {
             {navigationBar}
             {content}
             {timeSpanView}
+            {this.renderMoreView()}
         </View>
     }
 }

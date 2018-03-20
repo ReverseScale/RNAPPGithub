@@ -22,8 +22,11 @@ import RepositoryCell from '../common/RepositoryCell'
 import LanguageDao, {FLAG_LANGUAGE} from '../expand/dao/LanguageDao'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
+import {FLAG_TAB} from './HomePage'
 import SearchPage from './SearchPage'
+import MoreMenu,{MORE_MENU} from '../common/MoreMenu'
 import Utils from '../util/Utils'
+import ViewUtils from '../util/ViewUtils'
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
@@ -54,7 +57,7 @@ export default class PopularPage extends Component {
     }
 
     renderRightButton() {
-        return <View>
+        return <View style={{flexDirection:'row'}}>
             <TouchableOpacity
                 onPress={()=> {
                     this.props.navigator.push({
@@ -73,9 +76,19 @@ export default class PopularPage extends Component {
                 </View>
 
             </TouchableOpacity>
+            {ViewUtils.getMoreButton(()=>this.refs.moreMenu.open())}
         </View>
     }
-
+    renderMoreView(){
+        let params={...this.props,fromPage:FLAG_TAB.flag_popularTab}
+        return <MoreMenu
+            ref="moreMenu"
+            {...params}
+            menus={[MORE_MENU.Custom_Key,MORE_MENU.Sort_Key,MORE_MENU.Remove_Key,MORE_MENU.Custom_Theme,
+            MORE_MENU.About_Author,MORE_MENU.About]}
+            anchorView={()=>this.refs.moreMenuButton}
+        />
+    }
     render() {
         let navigationBar =
             <NavigationBar
@@ -102,6 +115,7 @@ export default class PopularPage extends Component {
         return <View style={styles.container}>
             {navigationBar}
             {content}
+            {this.renderMoreView()}
         </View>
     }
 }

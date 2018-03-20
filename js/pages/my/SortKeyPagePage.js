@@ -11,11 +11,13 @@ import {
     View,
     Image,
     Text,
-    Alert
+    Alert,
+    DeviceEventEmitter
 } from 'react-native'
 import SortableListView from 'react-native-sortable-listview'
 import NavigationBar from '../../common/NavigationBar'
 import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
+import {ACTION_HOME,FLAG_TAB} from '../HomePage'
 import ArrayUtils from '../../util/ArrayUtils'
 import ViewUtils from '../../util/ViewUtils'
 
@@ -74,21 +76,22 @@ export default class SortKeyPage extends Component {
         }
         this.getSortResult();
         this.languageDao.save(this.sortResultArray);
-        this.props.navigator.pop();
+        var jumpToTab=this.props.flag===FLAG_LANGUAGE.flag_key?FLAG_TAB.flag_popularTab:FLAG_TAB.flag_trendingTab;
+        DeviceEventEmitter.emit('ACTION_HOME',ACTION_HOME.A_RESTART,jumpToTab);
     }
 
     onBack() {
         if (!ArrayUtils.isEqual(this.originalCheckedArray, this.state.checkedArray)) {
             Alert.alert(
                 '提示',
-                '是否保存修改?',
+                '是否要保存修改呢?',
                 [
                     {
                         text: '否', onPress: () => {
                         this.props.navigator.pop();
                     }
                     }, {
-                        text: '是', onPress: () => {
+                    text: '是', onPress: () => {
                         this.onSave(true);
                     }
                 }

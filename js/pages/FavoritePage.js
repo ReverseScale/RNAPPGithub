@@ -14,13 +14,17 @@ import {
     DeviceEventEmitter
 } from 'react-native';
 import NavigationBar from '../common/NavigationBar'
+import ActionUtils from '../util/ActionUtils'
+import ViewUtils from '../util/ViewUtils'
+import {FLAG_TAB} from './HomePage'
 import {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import RepositoryCell from '../common/RepositoryCell'
 import TrendingRepoCell from '../common/TrendingRepoCell'
+import MoreMenu,{MORE_MENU} from '../common/MoreMenu'
+import RepositoryDetail from './RepositoryDetail'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
-import ActionUtils from '../util/ActionUtils'
 import ArrayUtils from '../util/ArrayUtils'
 export default class FavoritePage extends Component {
     constructor(props) {
@@ -30,29 +34,41 @@ export default class FavoritePage extends Component {
 
     componentDidMount() {
     }
-
+    renderMoreView(){
+        let params={...this.props,fromPage:FLAG_TAB.flag_popularTab}
+        return <MoreMenu
+            ref="moreMenu"
+            {...params}
+            menus={[MORE_MENU.Custom_Theme,
+                MORE_MENU.About_Author,MORE_MENU.About]}
+            anchorView={()=>this.refs.moreMenuButton}
+        />
+    }
     render() {
         let navigationBar =
             <NavigationBar
                 title={'收藏'}
                 statusBar={{backgroundColor: "#2196F3"}}
+                rightButton={ViewUtils.getMoreButton(()=>this.refs.moreMenu.open())}
             />;
+        let content=<ScrollableTabView
+            tabBarUnderlineStyle={{backgroundColor: '#e7e7e7', height: 2}}
+            tabBarInactiveTextColor='mintcream'
+            tabBarActiveTextColor='white'
+            ref="scrollableTabView"
+            tabBarBackgroundColor="#2196F3"
+            initialPage={0}
+            renderTabBar={() => <ScrollableTabBar style={{height: 40, borderWidth: 0, elevation: 2}}
+                                                  tabStyle={{height: 39}}/>}
+        >
+            <FavoriteTab {...this.props} tabLabel='最热' flag={FLAG_STORAGE.flag_popular}/>
+            <FavoriteTab {...this.props} tabLabel='趋势' flag={FLAG_STORAGE.flag_trending}/>
+
+        </ScrollableTabView>;
         return <View style={styles.container}>
             {navigationBar}
-            <ScrollableTabView
-                tabBarUnderlineStyle={{backgroundColor: '#e7e7e7', height: 2}}
-                tabBarInactiveTextColor='mintcream'
-                tabBarActiveTextColor='white'
-                ref="scrollableTabView"
-                tabBarBackgroundColor="#2196F3"
-                initialPage={0}
-                renderTabBar={() => <ScrollableTabBar style={{height: 40, borderWidth: 0, elevation: 2}}
-                                                      tabStyle={{height: 39}}/>}
-            >
-                <FavoriteTab {...this.props} tabLabel='最热' flag={FLAG_STORAGE.flag_popular}/>
-                <FavoriteTab {...this.props} tabLabel='趋势' flag={FLAG_STORAGE.flag_trending}/>
-
-            </ScrollableTabView>
+            {content}
+            {this.renderMoreView()}
         </View>
     }
 }
@@ -102,13 +118,22 @@ class FavoriteTab extends Component {
     getDataSource(items) {
         return this.state.dataSource.cloneWithRows(items);
     }
+
+    onSelectRepository(projectModel) {
+        var belongNavigator = this.props.navigator ? this.props.navigator : this.props.homeComponent.refs.navFavorite;
+        var item = projectModel.item;
+        belongNavigator.push({
+            title: item.full_name,
+            component: RepositoryDetail,
+            params: {
+                projectModel: projectModel,
+                flag: this.props.flag,
+                ...this.props
+            },
+        });
+    }
+
     onFavorite(item, isFavorite) {
-        var key = this.props.flag === FLAG_STORAGE.flag_popular ? item.id.toString() : item.fullName;
-        if (isFavorite) {
-            this.favoriteDao.saveFavoriteItem(key, JSON.stringify(item));
-        } else {
-            this.favoriteDao.removeFavoriteItem(key);
-        }
         ArrayUtils.updateArray(this.unFavoriteItems, item);
         if(this.unFavoriteItems.length>0){
             if (this.props.flag===FLAG_STORAGE.flag_popular){
@@ -125,11 +150,10 @@ class FavoriteTab extends Component {
         return (
             <CellComponent
                 key={this.props.flag === FLAG_STORAGE.flag_popular ? projectModel.item.id : projectModel.item.fullName}
-                onFavorite={(item, isFavorite)=>this.onFavorite(item, isFavorite)}
+                onFavorite={(item, isFavorite)=>ActionUtils.onFavorite(this.favoriteDao,item, isFavorite,this.props.flag)}
                 isFavorite={true}
                 {...{navigator}}
                 onSelect={()=>ActionUtils.onSelectRepository({
-                    projectModel:projectModel,
                     projectModel: projectModel,
                     flag: this.props.flag,
                     ...this.props
