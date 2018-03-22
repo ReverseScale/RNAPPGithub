@@ -5,6 +5,7 @@
  */
 'use strict';
 
+
 import React, {Component} from 'react';
 import {
     Dimensions,
@@ -20,10 +21,10 @@ import {
 } from 'react-native';
 import {MORE_MENU} from '../../common/MoreMenu'
 import WebViewPage from '../../pages/WebViewPage'
+import AboutMePage from './AboutMePage'
 import GlobalStyles from '../../../res/styles/GlobalStyles'
 import ViewUtils from '../../util/ViewUtils'
 import AboutCommon,{FLAG_ABOUT}from './AboutCommon'
-import AboutMePage from './AboutMePage'
 import config from '../../../res/data/config.json'
 
 export default class AboutPage extends Component{
@@ -45,7 +46,7 @@ export default class AboutPage extends Component{
         let TargetComponent, params = {...this.props,menuType:tab};
         switch (tab) {
             case MORE_MENU.About_Author:
-                TargetComponent = AboutMePage;
+                TargetComponent=AboutMePage;
                 break;
             case MORE_MENU.Website:
                 TargetComponent = WebViewPage;
@@ -77,17 +78,17 @@ export default class AboutPage extends Component{
     render() {
         let content=<View>
             {this.aboutCommon.renderRepository(this.state.projectModels)}
-            {ViewUtils.getSettingItem(()=>this.onClick(MORE_MENU.Website), require('../../../res/images/ic_computer.png'),MORE_MENU.Website, {tintColor:'#2196F3'})}
+            {ViewUtils.getSettingItem(()=>this.onClick(MORE_MENU.Website), require('../../../res/images/ic_computer.png'),MORE_MENU.Website, this.props.theme.styles.tabBarSelectedIcon)}
             <View style={GlobalStyles.line}/>
-            {ViewUtils.getSettingItem(()=>this.onClick(MORE_MENU.About_Author), require('../my/img/ic_insert_emoticon.png'), MORE_MENU.About_Author, {tintColor:'#2196F3'})}
+            {ViewUtils.getSettingItem(()=>this.onClick(MORE_MENU.About_Author), require('../my/img/ic_insert_emoticon.png'), MORE_MENU.About_Author, this.props.theme.styles.tabBarSelectedIcon)}
             <View style={GlobalStyles.line}/>
-            {ViewUtils.getSettingItem(()=>this.onClick(MORE_MENU.Feedback), require('../../../res/images/ic_feedback.png'), MORE_MENU.Feedback,{tintColor:'#2196F3'})}
+            {ViewUtils.getSettingItem(()=>this.onClick(MORE_MENU.Feedback), require('../../../res/images/ic_feedback.png'), MORE_MENU.Feedback,this.props.theme.styles.tabBarSelectedIcon)}
         </View>
         return this.aboutCommon.render(content, {
             'name': 'GitHub Popular',
             'description': '这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。',
-            'avatar':'http://avatar.csdn.net/1/1/E/1_fengyuzhengfan.jpg',
-            'backgroundImg':'http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg',
+            'avatar':this.state.author.avatar1,
+            'backgroundImg':this.state.author.backgroundImg1,
         });
     }
 }

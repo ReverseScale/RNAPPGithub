@@ -16,6 +16,8 @@ import {
 } from 'react-native'
 import NavigationBar from '../common/NavigationBar'
 import ViewUtils from '../util/ViewUtils'
+import share from '../../res/data/share.json'
+import UShare from '../common/UShare'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 const TRENDING_URL = 'https://github.com/'
 export default class RepositoryDetail extends Component {
@@ -35,9 +37,11 @@ export default class RepositoryDetail extends Component {
 
         }
     }
+
     componentWillUnmount() {
         if (this.props.onUpdateFavorite)this.props.onUpdateFavorite();
     }
+
     setFavoriteState(isFavorite) {
         this.setState({
             isFavorite: isFavorite,
@@ -70,14 +74,24 @@ export default class RepositoryDetail extends Component {
             url: navState.url,
         });
     }
+
     renderRightButton() {
-        return <TouchableOpacity
-            onPress={()=>this.onRightButtonClick()}>
-            <Image
-                style={{width: 20, height: 20,marginRight:10}}
-                source={this.state.favoriteIcon}/>
-        </TouchableOpacity>
+        return (<View style={{flexDirection: 'row'}}>
+                {ViewUtils.getShareButton(()=>{
+                    var shareApp=share.share_app;
+                    UShare.share(shareApp.title, shareApp.content,
+                        shareApp.imgUrl,shareApp.url,()=>{},()=>{})
+                })}
+                <TouchableOpacity
+                    onPress={()=>this.onRightButtonClick()}>
+                    <Image
+                        style={{width: 20, height: 20, marginRight: 10}}
+                        source={this.state.favoriteIcon}/>
+                </TouchableOpacity>
+            </View>
+        )
     }
+
     render() {
         return (
             <View style={styles.container}>
@@ -85,10 +99,11 @@ export default class RepositoryDetail extends Component {
                     leftButton={ViewUtils.getLeftButton(()=>this.onBack())}
                     popEnabled={false}
                     title={this.state.title}
+                    style={this.props.theme.styles.navBar}
                     rightButton={this.renderRightButton()}
                 />
                 <WebView
-                    ref={webView=>this.webView=webView}
+                    ref={webView=>this.webView = webView}
                     startInLoadingState={true}
                     onNavigationStateChange={(e)=>this.onNavigationStateChange(e)}
                     source={{uri: this.state.url}}/>

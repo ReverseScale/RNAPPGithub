@@ -50,7 +50,7 @@ export default class TrendingRepoCell extends Component {
                 onPress={()=>this.onPressFavorite()} underlayColor='transparent'>
                 <Image
                     ref='favoriteIcon'
-                    style={[{width: 22, height: 22,},{tintColor:"#2196F3"}]}
+                    style={[{width: 22, height: 22,},this.props.theme.styles.tabBarSelectedIcon]}
                     source={this.state.favoriteIcon}/>
             </TouchableOpacity>:null;
         var description='<p>'+item.description+'</p>';

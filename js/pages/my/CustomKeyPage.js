@@ -124,9 +124,9 @@ export default class CustomKeyPage extends Component {
                 isChecked={isChecked}
                 leftText={leftText}
                 checkedImage={<Image source={require('../../pages/my/img/ic_check_box.png')}
-                                     style={{tintColor: '#2196F3'}}/>}
+                                     style={this.props.theme.styles.tabBarSelectedIcon}/>}
                 unCheckedImage={<Image source={require('../../pages/my/img/ic_check_box_outline_blank.png')}
-                                       style={{tintColor: '#2196F3'}}/>}
+                                       style={this.props.theme.styles.tabBarSelectedIcon}/>}
             />);
     }
 
@@ -138,7 +138,7 @@ export default class CustomKeyPage extends Component {
             <NavigationBar
                 title={title}
                 leftButton={ViewUtils.getLeftButton(()=>this.onBack())}
-                style={{backgroundColor: '#2196F3'}}
+                style={this.props.theme.styles.navBar}
                 rightButton={ViewUtils.getRightButton(rightButtonTitle,()=>this.onSave())}/>;
         return (
             <View style={styles.container}>

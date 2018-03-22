@@ -1,34 +1,47 @@
 /**
- * Created by penn on 2016/12/14.
- */
-
-import React, {Component} from 'react';
+ * 我的页面
+ * @flow
+ * **/
+import React, {Component} from "react";
 import {
-    View,
     StyleSheet,
-    Text,
-    ScrollView,
-    TouchableHighlight,
+    View,
     Image,
-} from 'react-native'
-import CustomKeyPage from './CustomKeyPage'
-import SortKeyPagePage from './SortKeyPagePage'
-import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
-import NavigationBar from '../../../js/common/NavigationBar'
+    Text,
+    Platform,
+    ScrollView,
+    TouchableHighlight
+} from "react-native";
+import NavigationBar from "../../common/NavigationBar";
 import {MORE_MENU} from "../../common/MoreMenu";
+import BaseComponent from '../BaseComponent'
+import CustomKeyPage from "./CustomKeyPage";
+import SortKeyPagePage from "./SortKeyPagePage";
+import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
 import GlobalStyles from '../../../res/styles/GlobalStyles'
+import CustomThemePage from './CustomTheme'
 import ViewUtils from '../../util/ViewUtils'
-
 import AboutPage from '../about/AboutPage'
 import AboutMePage from '../about/AboutMePage'
-export default class MyPage extends Component {
-    constructor(props) {
+
+export default class MyPage extends BaseComponent {
+    constructor(props){
         super(props);
-        this.state = {
-            what: ''
+        this.state={
+            customThemeViewVisible:false,
+            theme:this.props.theme
         }
     }
-
+    update(){
+        
+    }
+    renderCustomThemeView(){
+        return (<CustomThemePage
+            visible={this.state.customThemeViewVisible}
+            {...this.props}
+            onClose={()=>this.setState({customThemeViewVisible:false})}
+        />)
+    }
     onClick(tab) {
         let TargetComponent, params = {...this.props,menuType: tab};
         switch (tab) {
@@ -43,7 +56,6 @@ export default class MyPage extends Component {
             case MORE_MENU.Remove_Key:
                 TargetComponent = CustomKeyPage;
                 params.flag = FLAG_LANGUAGE.flag_key;
-                params.isRemoveKey = true;
                 break;
             case MORE_MENU.Sort_Language:
                 TargetComponent = SortKeyPagePage;
@@ -54,6 +66,7 @@ export default class MyPage extends Component {
                 params.flag = FLAG_LANGUAGE.flag_key;
                 break;
             case MORE_MENU.Custom_Theme:
+                this.setState({customThemeViewVisible:true})
                 break;
             case MORE_MENU.About_Author:
                 TargetComponent=AboutMePage;
@@ -61,6 +74,10 @@ export default class MyPage extends Component {
             case MORE_MENU.About:
                 TargetComponent=AboutPage;
                 break;
+            case '更新':
+                this.update();
+                break;
+
         }
         if (TargetComponent) {
             this.props.navigator.push({
@@ -71,19 +88,17 @@ export default class MyPage extends Component {
     }
 
     getItem(tag, icon, text) {
-        return ViewUtils.getSettingItem(()=>this.onClick(tag), icon, text,{tintColor:'#2196F3'},null);
+        return ViewUtils.getSettingItem(()=>this.onClick(tag), icon, text,this.state.theme.styles.tabBarSelectedIcon,null);
     }
 
 
     render() {
-        var navigationBar = 
-        <NavigationBar
-            title='我的'
-            style={{backgroundColor:"#2196F3"}}
-        />;
-
+        var navigationBar =
+            <NavigationBar
+                style={this.state.theme.styles.navBar}
+                title='我的'/>;
         return (
-            <View style={GlobalStyles.root_container}>
+            <View style={{backgroundColor:'red'}}>
                 {navigationBar}
                 <ScrollView >
                     {/*logo*/}
@@ -92,7 +107,7 @@ export default class MyPage extends Component {
                         <View style={[styles.item, {height: 90}]}>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <Image source={require('../../../res/images/ic_trending.png')}
-                                       style={[{width: 40, height: 40, marginRight: 10},{tintColor:'#2196F3'}]}/>
+                                       style={[{width: 40, height: 40, marginRight: 10},this.state.theme.styles.tabBarSelectedIcon]}/>
                                 <Text>GitHub Popular</Text>
                             </View>
                             <Image source={require('../../../res/images/ic_tiaozhuan.png')}
@@ -102,7 +117,7 @@ export default class MyPage extends Component {
                                        height: 22,
                                        width: 22,
                                        alignSelf: 'center',
-                                   }, {tintColor:'#2196F3'}]}/>
+                                   }, this.state.theme.styles.tabBarSelectedIcon]}/>
                         </View>
                     </TouchableHighlight>
                     <View style={GlobalStyles.line}/>
@@ -136,16 +151,17 @@ export default class MyPage extends Component {
                     {/*关于作者*/}
                     <View style={GlobalStyles.line}/>
                     {this.getItem(MORE_MENU.About_Author, require('./img/ic_insert_emoticon.png'), '关于作者')}
+                    <View style={GlobalStyles.line}/>
+                    {this.getItem('更新', require('./img/ic_insert_emoticon.png'), '检测更新')}
                     <View style={[{marginBottom: 60}]}/>
                 </ScrollView>
-            </View>)
+                {this.renderCustomThemeView()}
+            </View>
+        );
     }
+
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-
-    },
     item: {
         backgroundColor: 'white',
         padding: 10, height: 60,

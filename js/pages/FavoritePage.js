@@ -15,48 +15,70 @@ import {
 } from 'react-native';
 import NavigationBar from '../common/NavigationBar'
 import ActionUtils from '../util/ActionUtils'
+import CustomThemePage from './my/CustomTheme'
+import BaseComponent from './BaseComponent'
 import ViewUtils from '../util/ViewUtils'
 import {FLAG_TAB} from './HomePage'
 import {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import RepositoryCell from '../common/RepositoryCell'
 import TrendingRepoCell from '../common/TrendingRepoCell'
-import MoreMenu,{MORE_MENU} from '../common/MoreMenu'
-import RepositoryDetail from './RepositoryDetail'
+import MoreMenu, {MORE_MENU} from '../common/MoreMenu'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import ProjectModel from '../model/ProjectModel'
 import ArrayUtils from '../util/ArrayUtils'
-export default class FavoritePage extends Component {
+export default class FavoritePage extends BaseComponent {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            theme: this.props.theme,
+            customThemeViewVisible: false,
+        }
     }
 
-    componentDidMount() {
-    }
-    renderMoreView(){
-        let params={...this.props,fromPage:FLAG_TAB.flag_popularTab}
+    renderMoreView() {
+        let params = {...this.props, fromPage: FLAG_TAB.flag_popularTab}
         return <MoreMenu
             ref="moreMenu"
             {...params}
-            menus={[MORE_MENU.Custom_Theme,
-                MORE_MENU.About_Author,MORE_MENU.About]}
+            menus={[MORE_MENU.Custom_Theme,MORE_MENU.Share,
+                MORE_MENU.About_Author, MORE_MENU.About]}
             anchorView={()=>this.refs.moreMenuButton}
+            onMoreMenuSelect={(e)=> {
+                if (e === MORE_MENU.Custom_Theme) {
+                    this.setState({
+                        customThemeViewVisible:true
+                    })
+                }
+            }}
         />
     }
+
+    renderCustomThemeView() {
+        return (<CustomThemePage
+            visible={this.state.customThemeViewVisible}
+            {...this.props}
+            onClose={()=>this.setState({customThemeViewVisible: false})}
+        />)
+    }
+
     render() {
+        var statusBar = {
+            backgroundColor: this.state.theme.themeColor
+        }
         let navigationBar =
             <NavigationBar
                 title={'收藏'}
-                statusBar={{backgroundColor: "#2196F3"}}
+                statusBar={statusBar}
+                style={this.state.theme.styles.navBar}
                 rightButton={ViewUtils.getMoreButton(()=>this.refs.moreMenu.open())}
             />;
-        let content=<ScrollableTabView
+        let content = <ScrollableTabView
             tabBarUnderlineStyle={{backgroundColor: '#e7e7e7', height: 2}}
             tabBarInactiveTextColor='mintcream'
             tabBarActiveTextColor='white'
             ref="scrollableTabView"
-            tabBarBackgroundColor="#2196F3"
+            tabBarBackgroundColor={this.state.theme.themeColor}
             initialPage={0}
             renderTabBar={() => <ScrollableTabBar style={{height: 40, borderWidth: 0, elevation: 2}}
                                                   tabStyle={{height: 39}}/>}
@@ -69,27 +91,32 @@ export default class FavoritePage extends Component {
             {navigationBar}
             {content}
             {this.renderMoreView()}
+            {this.renderCustomThemeView()}
         </View>
     }
 }
 class FavoriteTab extends Component {
     constructor(props) {
         super(props);
-        this.unFavoriteItems=[];
+        this.unFavoriteItems = [];
         this.favoriteDao = new FavoriteDao(this.props.flag);
         this.state = {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2}),
             isLoading: false,
             favoriteKeys: [],
+            theme: this.props.theme
         }
     }
 
     componentDidMount() {
         this.loadData();
     }
+
     componentWillReceiveProps(nextProps) {
         this.loadData(false);
+
     }
+
     loadData(isShowLoading) {
         if (isShowLoading)
             this.setState({
@@ -119,26 +146,12 @@ class FavoriteTab extends Component {
         return this.state.dataSource.cloneWithRows(items);
     }
 
-    onSelectRepository(projectModel) {
-        var belongNavigator = this.props.navigator ? this.props.navigator : this.props.homeComponent.refs.navFavorite;
-        var item = projectModel.item;
-        belongNavigator.push({
-            title: item.full_name,
-            component: RepositoryDetail,
-            params: {
-                projectModel: projectModel,
-                flag: this.props.flag,
-                ...this.props
-            },
-        });
-    }
-
     onFavorite(item, isFavorite) {
         ArrayUtils.updateArray(this.unFavoriteItems, item);
-        if(this.unFavoriteItems.length>0){
-            if (this.props.flag===FLAG_STORAGE.flag_popular){
+        if (this.unFavoriteItems.length > 0) {
+            if (this.props.flag === FLAG_STORAGE.flag_popular) {
                 DeviceEventEmitter.emit('favoriteChanged_popular');
-            }else {
+            } else {
                 DeviceEventEmitter.emit('favoriteChanged_trending');
             }
         }
@@ -150,8 +163,9 @@ class FavoriteTab extends Component {
         return (
             <CellComponent
                 key={this.props.flag === FLAG_STORAGE.flag_popular ? projectModel.item.id : projectModel.item.fullName}
-                onFavorite={(item, isFavorite)=>ActionUtils.onFavorite(this.favoriteDao,item, isFavorite,this.props.flag)}
+                onFavorite={(item, isFavorite)=>ActionUtils.onFavorite(this.favoriteDao, item, isFavorite, this.props.flag)}
                 isFavorite={true}
+                theme={this.props.theme}
                 {...{navigator}}
                 onSelect={()=>ActionUtils.onSelectRepository({
                     projectModel: projectModel,
@@ -176,11 +190,11 @@ class FavoriteTab extends Component {
                 refreshControl={
                     <RefreshControl
                         title='Loading...'
-                        titleColor='#2196F3'
-                        colors={['#2196F3']}
+                        titleColor={this.props.theme.themeColor}
+                        colors={[this.props.theme.themeColor]}
                         refreshing={this.state.isLoading}
                         onRefresh={()=>this.onRefresh()}
-                        tintColor='#2196F3'
+                        tintColor={this.props.theme.themeColor}
                     />}
             />;
         return (

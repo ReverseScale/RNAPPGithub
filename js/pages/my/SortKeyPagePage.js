@@ -108,7 +108,7 @@ export default class SortKeyPage extends Component {
             <NavigationBar
                 title={title}
                 leftButton={ViewUtils.getLeftButton(()=>this.onBack())}
-                style={{backgroundColor: '#2196F3'}}
+                style={this.props.theme.styles.navBar}
                 rightButton={ViewUtils.getRightButton('保存',()=>this.onSave())}/>;
         return (
             <View style={styles.container}>
@@ -135,13 +135,12 @@ class SortCell extends Component {
             style={this.props.data.checked ? styles.item : styles.hidden}
             {...this.props.sortHandlers}>
             <View style={{marginLeft: 10, flexDirection: 'row'}}>
-                <Image source={require('./img/ic_sort.png')} resizeMode='stretch' style={{
+                <Image source={require('./img/ic_sort.png')} resizeMode='stretch' style={[{
                     opacity: 1,
                     width: 16,
                     height: 16,
                     marginRight: 10,
-                    tintColor:'#2196F3'
-                }}/>
+                },this.props.theme.styles.tabBarSelectedIcon]}/>
                 <Text>{this.props.data.name}</Text>
             </View>
         </TouchableHighlight>

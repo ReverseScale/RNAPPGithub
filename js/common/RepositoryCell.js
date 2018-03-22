@@ -1,4 +1,6 @@
-
+/**
+ * Created by penn on 2016/12/21.
+ */
 import React, {Component} from 'react';
 import {
     View,
@@ -41,13 +43,12 @@ export default class RepositoryCell extends Component {
                 onPress={()=>this.onPressFavorite()} underlayColor='transparent'>
                 <Image
                     ref='favoriteIcon'
-                    style={[{width: 22, height: 22,},{tintColor:"#2196F3"}]}
+                    style={[{width: 22, height: 22,},this.props.theme.styles.tabBarSelectedIcon]}
                     source={this.state.favoriteIcon}/>
             </TouchableOpacity>:null;
         return (
             <TouchableOpacity
                 onPress={this.props.onSelect}
-                style={styles.container}
             >
                 <View style={styles.cell_container}>
                     <Text style={styles.title}>{item.full_name}</Text>
@@ -74,10 +75,6 @@ export default class RepositoryCell extends Component {
     }
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-
-    },
     row: {
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -87,7 +84,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 2,
         color: '#212121',
-        flex: 1
     },
     description: {
         fontSize: 14,
@@ -110,7 +106,3 @@ const styles = StyleSheet.create({
         elevation:2
     },
 })
-
-
-
-
