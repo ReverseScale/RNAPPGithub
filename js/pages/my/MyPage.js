@@ -17,16 +17,25 @@ import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
 import NavigationBar from '../../../js/common/NavigationBar'
 import {MORE_MENU} from "../../common/MoreMenu";
 import GlobalStyles from '../../../res/styles/GlobalStyles'
+import CustomThemePage from './CustomTheme'
 import ViewUtils from '../../util/ViewUtils'
-
 import AboutPage from '../about/AboutPage'
 import AboutMePage from '../about/AboutMePage'
 export default class MyPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            what: ''
+            what: '',
+            customThemeViewVisible:false,
         }
+    }
+
+    renderCustomThemeView(){
+        return (<CustomThemePage
+            visible={this.state.customThemeViewVisible}
+            {...this.props}
+            onClose={()=>this.setState({customThemeViewVisible:false})}
+        />)
     }
 
     onClick(tab) {
@@ -54,6 +63,7 @@ export default class MyPage extends Component {
                 params.flag = FLAG_LANGUAGE.flag_key;
                 break;
             case MORE_MENU.Custom_Theme:
+                this.setState({customThemeViewVisible:true})
                 break;
             case MORE_MENU.About_Author:
                 TargetComponent=AboutMePage;
@@ -138,6 +148,7 @@ export default class MyPage extends Component {
                     {this.getItem(MORE_MENU.About_Author, require('./img/ic_insert_emoticon.png'), '关于作者')}
                     <View style={[{marginBottom: 60}]}/>
                 </ScrollView>
+                {this.renderCustomThemeView()}
             </View>)
     }
 }
