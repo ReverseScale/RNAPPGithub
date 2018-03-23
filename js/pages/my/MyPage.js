@@ -27,6 +27,7 @@ export default class MyPage extends Component {
         this.state = {
             what: '',
             customThemeViewVisible:false,
+            theme:this.props.theme
         }
     }
 
@@ -81,7 +82,7 @@ export default class MyPage extends Component {
     }
 
     getItem(tag, icon, text) {
-        return ViewUtils.getSettingItem(()=>this.onClick(tag), icon, text,{tintColor:'#2196F3'},null);
+        return ViewUtils.getSettingItem(()=>this.onClick(tag), icon, text,this.state.theme.styles.tabBarSelectedIcon,null);
     }
 
 
@@ -89,7 +90,7 @@ export default class MyPage extends Component {
         var navigationBar = 
         <NavigationBar
             title='我的'
-            style={{backgroundColor:"#2196F3"}}
+            style={this.state.theme.styles.navBar}
         />;
 
         return (
@@ -102,7 +103,7 @@ export default class MyPage extends Component {
                         <View style={[styles.item, {height: 90}]}>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <Image source={require('../../../res/images/ic_trending.png')}
-                                       style={[{width: 40, height: 40, marginRight: 10},{tintColor:'#2196F3'}]}/>
+                                       style={[{width: 40, height: 40, marginRight: 10},this.state.theme.styles.tabBarSelectedIcon]}/>
                                 <Text>GitHub Popular</Text>
                             </View>
                             <Image source={require('../../../res/images/ic_tiaozhuan.png')}
@@ -112,7 +113,7 @@ export default class MyPage extends Component {
                                        height: 22,
                                        width: 22,
                                        alignSelf: 'center',
-                                   }, {tintColor:'#2196F3'}]}/>
+                                   }, this.state.theme.styles.tabBarSelectedIcon]}/>
                         </View>
                     </TouchableHighlight>
                     <View style={GlobalStyles.line}/>

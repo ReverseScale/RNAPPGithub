@@ -106,6 +106,7 @@ export default class AboutCommon {
             views.push(
                 <RepositoryCell
                     key={projectModel.item.id}
+                    theme={this.props.theme}
                     onSelect={()=>ActionUtils.onSelectRepository({
                         projectModel: projectModel,
                         parentComponent: this,
@@ -167,7 +168,7 @@ export default class AboutCommon {
         return (
             <ParallaxScrollView
                 contentBackgroundColor={GlobalStyles.backgroundColor}
-                backgroundColor='#2196F3'
+                backgroundColor={this.props.theme.themeColor}
                 headerBackgroundColor="#333"
                 stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
                 parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }

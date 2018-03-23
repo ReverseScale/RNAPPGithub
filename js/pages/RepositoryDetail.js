@@ -85,6 +85,7 @@ export default class RepositoryDetail extends Component {
                     leftButton={ViewUtils.getLeftButton(()=>this.onBack())}
                     popEnabled={false}
                     title={this.state.title}
+                    style={this.props.theme.styles.navBar}
                     rightButton={this.renderRightButton()}
                 />
                 <WebView

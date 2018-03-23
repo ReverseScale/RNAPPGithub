@@ -29,7 +29,9 @@ import ArrayUtils from '../util/ArrayUtils'
 export default class FavoritePage extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            theme:this.props.theme
+        }
     }
 
     componentDidMount() {
@@ -45,10 +47,14 @@ export default class FavoritePage extends Component {
         />
     }
     render() {
+        var statusBar = {
+            backgroundColor: this.state.theme.themeColor
+        }
         let navigationBar =
             <NavigationBar
                 title={'收藏'}
-                statusBar={{backgroundColor: "#2196F3"}}
+                style={this.state.theme.styles.navBar}
+                statusBar={statusBar}
                 rightButton={ViewUtils.getMoreButton(()=>this.refs.moreMenu.open())}
             />;
         let content=<ScrollableTabView
@@ -56,7 +62,7 @@ export default class FavoritePage extends Component {
             tabBarInactiveTextColor='mintcream'
             tabBarActiveTextColor='white'
             ref="scrollableTabView"
-            tabBarBackgroundColor="#2196F3"
+            tabBarBackgroundColor={this.state.theme.themeColor}
             initialPage={0}
             renderTabBar={() => <ScrollableTabBar style={{height: 40, borderWidth: 0, elevation: 2}}
                                                   tabStyle={{height: 39}}/>}
@@ -81,6 +87,7 @@ class FavoriteTab extends Component {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2}),
             isLoading: false,
             favoriteKeys: [],
+            theme:this.props.theme
         }
     }
 
@@ -152,6 +159,7 @@ class FavoriteTab extends Component {
                 key={this.props.flag === FLAG_STORAGE.flag_popular ? projectModel.item.id : projectModel.item.fullName}
                 onFavorite={(item, isFavorite)=>ActionUtils.onFavorite(this.favoriteDao,item, isFavorite,this.props.flag)}
                 isFavorite={true}
+                theme={this.props.theme}
                 {...{navigator}}
                 onSelect={()=>ActionUtils.onSelectRepository({
                     projectModel: projectModel,
@@ -176,12 +184,13 @@ class FavoriteTab extends Component {
                 refreshControl={
                     <RefreshControl
                         title='Loading...'
-                        titleColor='#2196F3'
-                        colors={['#2196F3']}
+                        titleColor={this.props.theme.themeColor}
+                        colors={[this.props.theme.themeColor]}
                         refreshing={this.state.isLoading}
-                        onRefresh={()=>this.onRefresh()}
-                        tintColor='#2196F3'
-                    />}
+                        onRefresh={()=>this.loadData()}
+                        tintColor={this.props.theme.themeColor}
+                    />
+                }
             />;
         return (
             <View style={styles.container}>

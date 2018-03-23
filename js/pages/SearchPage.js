@@ -190,7 +190,7 @@ export default class SearchPage extends Component {
                 </View>
             </TouchableOpacity>
         return <View style={{
-            backgroundColor: '#2196F3',
+            backgroundColor: this.props.theme.themeColor,
             flexDirection: 'row',
             alignItems: 'center',
             height: (Platform.OS === 'ios') ? GlobalStyles.nav_bar_height_ios : GlobalStyles.nav_bar_height_android,
@@ -204,6 +204,7 @@ export default class SearchPage extends Component {
         return <RepositoryCell
             key={projectModel.item.id}
             projectModel={projectModel}
+            theme={this.props.theme}
             onSelect={()=>ActionUtils.onSelectRepository({
                 projectModel: projectModel,
                 flag: FLAG_STORAGE.flag_popular,
@@ -217,7 +218,7 @@ export default class SearchPage extends Component {
     render() {
         let statusBar = null;
         if (Platform.OS === 'ios') {
-            statusBar = <View style={[styles.statusBar, {backgroundColor: '#2196F3'}]}/>
+            statusBar = <View style={[styles.statusBar, {backgroundColor:this.props.theme.themeColor}]}/>
         }
         let listView=!this.state.isLoading?<ListView
             dataSource={this.state.dataSource}
@@ -235,7 +236,7 @@ export default class SearchPage extends Component {
         </View>
         let bottomButton=this.state.showBottomButton?
             <TouchableOpacity
-                style={[styles.bottomButton,{backgroundColor: '#2196F3'}]}
+                style={[styles.bottomButton,{backgroundColor:this.props.theme.themeColor}]}
                 onPress={()=>{
                     this.saveKey();
                 }

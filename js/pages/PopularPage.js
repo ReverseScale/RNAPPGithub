@@ -37,6 +37,7 @@ export default class PopularPage extends Component {
         this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
         this.state = {
             languages: [],
+            theme:this.props.theme,
         }
         this.loadLanguage();
     }
@@ -90,10 +91,14 @@ export default class PopularPage extends Component {
         />
     }
     render() {
+        var statusBar = {
+            backgroundColor: this.state.theme.themeColor
+        }
         let navigationBar =
             <NavigationBar
                 title={'最热'}
-                statusBar={{backgroundColor: "#2196F3"}}
+                statusBar={statusBar}
+                style={this.state.theme.styles.navBar}
                 rightButton={this.renderRightButton()}
             />;
         let content = this.state.languages.length > 0 ?
@@ -102,7 +107,7 @@ export default class PopularPage extends Component {
                 tabBarInactiveTextColor='mintcream'
                 tabBarActiveTextColor='white'
                 ref="scrollableTabView"
-                tabBarBackgroundColor="#2196F3"
+                tabBarBackgroundColor={this.state.theme.themeColor}
                 initialPage={0}
                 renderTabBar={() => <ScrollableTabBar style={{height: 40, borderWidth: 0, elevation: 2}}
                                                       tabStyle={{height: 39}}/>}
@@ -127,6 +132,7 @@ class PopularTab extends Component {
             dataSource: new ListView.DataSource({rowHasChanged: (r1, r2)=>r1 !== r2}),
             isLoading: false,
             favoriteKeys: [],
+            theme:this.props.theme
         }
     }
 
@@ -222,6 +228,7 @@ class PopularTab extends Component {
         return <RepositoryCell
             key={projectModel.item.id}
             projectModel={projectModel}
+            theme={this.props.theme}
             onSelect={()=>ActionUtils.onSelectRepository({
                 projectModel: projectModel,
                 flag: FLAG_STORAGE.flag_popular,
@@ -240,11 +247,11 @@ class PopularTab extends Component {
                 refreshControl={
                     <RefreshControl
                         title='Loading...'
-                        titleColor='#2196F3'
-                        colors={['#2196F3']}
+                        titleColor={this.props.theme.themeColor}
+                        colors={[this.props.theme.themeColor]}
                         refreshing={this.state.isLoading}
                         onRefresh={()=>this.loadData()}
-                        tintColor='#2196F3'
+                        tintColor={this.props.theme.themeColor}
                     />
                 }
             />
