@@ -73,6 +73,7 @@ export default class MoreMenu extends Component {
 
     onMoreMenuSelect(tab) {
         this.closePopover();
+        if(typeof(this.props.onMoreMenuSelect)=='function')this.props.onMoreMenuSelect(tab)
         let TargetComponent, params = {...this.props, menuType: tab};
         switch (tab) {
             case MORE_MENU.Custom_Language:

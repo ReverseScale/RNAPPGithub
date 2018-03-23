@@ -11,6 +11,7 @@ import {
     TouchableHighlight,
     Image,
 } from 'react-native'
+import BaseComponent from '../BaseComponent'
 import CustomKeyPage from './CustomKeyPage'
 import SortKeyPagePage from './SortKeyPagePage'
 import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
@@ -21,7 +22,7 @@ import CustomThemePage from './CustomTheme'
 import ViewUtils from '../../util/ViewUtils'
 import AboutPage from '../about/AboutPage'
 import AboutMePage from '../about/AboutMePage'
-export default class MyPage extends Component {
+export default class MyPage extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {

@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import NavigationBar from '../common/NavigationBar'
 import ActionUtils from '../util/ActionUtils'
+import CustomThemePage from './my/CustomTheme'
+import BaseComponent from './BaseComponent'
 import DataRepository, {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import RepositoryCell from '../common/RepositoryCell'
@@ -31,18 +33,16 @@ const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 var favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 var dataRepository = new DataRepository(FLAG_STORAGE.flag_popular);
-export default class PopularPage extends Component {
+export default class PopularPage extends BaseComponent {
     constructor(props) {
         super(props);
         this.languageDao = new LanguageDao(FLAG_LANGUAGE.flag_key);
         this.state = {
             languages: [],
             theme:this.props.theme,
+            customThemeViewVisible: false,
         }
         this.loadLanguage();
-    }
-
-    componentDidMount() {
     }
 
     loadLanguage() {
@@ -85,13 +85,27 @@ export default class PopularPage extends Component {
         return <MoreMenu
             ref="moreMenu"
             {...params}
-            menus={[MORE_MENU.Custom_Key,MORE_MENU.Sort_Key,MORE_MENU.Remove_Key,MORE_MENU.Custom_Theme,
+            menus={[MORE_MENU.Custom_Key,MORE_MENU.Sort_Key,MORE_MENU.Remove_Key,MORE_MENU.Share,MORE_MENU.Custom_Theme,
             MORE_MENU.About_Author,MORE_MENU.About]}
             anchorView={()=>this.refs.moreMenuButton}
+            onMoreMenuSelect={(e)=> {
+                if (e === MORE_MENU.Custom_Theme) {
+                    this.setState({
+                        customThemeViewVisible:true
+                    })
+                }
+            }}
         />
     }
+    renderCustomThemeView() {
+        return (<CustomThemePage
+            visible={this.state.customThemeViewVisible}
+            {...this.props}
+            onClose={()=>this.setState({customThemeViewVisible: false})}
+        />)
+    }
     render() {
-        var statusBar = {
+        var statusBar={
             backgroundColor: this.state.theme.themeColor
         }
         let navigationBar =
@@ -121,6 +135,7 @@ export default class PopularPage extends Component {
             {navigationBar}
             {content}
             {this.renderMoreView()}
+            {this.renderCustomThemeView()}
         </View>
     }
 }
@@ -153,6 +168,9 @@ class PopularTab extends Component {
         if (this.isFavoriteChanged) {
             this.isFavoriteChanged = false;
             this.getFavoriteKeys();
+        }else if(nextProps.theme!==this.state.theme){
+            this.updateState({theme:nextProps.theme})
+            this.flushFavoriteState();
         }
     }
 
