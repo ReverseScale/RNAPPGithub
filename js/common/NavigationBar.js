@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
         bottom: 0,
     },
     title: {
-        fontSize: 20,
+        fontSize: 19,
+        top: 5,
         color: '#FFFFFF',
     },
     navBarButton: {
@@ -104,6 +105,5 @@ const styles = StyleSheet.create({
     },
     statusBar: {
         height: Platform.OS === 'ios' ? STATUS_BAR_HEIGHT:0,
-
     },
 })

@@ -99,6 +99,7 @@ export default class HomePage extends BaseComponent {
                     {this._renderTab(FavoritePage,'tb_favorite','收藏',require('../../res/images/ic_favorite.png'))}
                     {this._renderTab(MyPage,'tb_my','我的',require('../../res/images/ic_my.png'))}
                 </TabNavigator>
+                <View style={styles.tabBarHome}></View>
                 <Toast ref={(toast)=>this.toast=toast}/>
             </View>
         );
@@ -108,6 +109,12 @@ export default class HomePage extends BaseComponent {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    tabBarHome:{
+        height: 20,
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor:'#F8F8F8',
     },
     image: {
         height: 26,
