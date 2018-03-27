@@ -1,37 +1,49 @@
 /**
- * Created by penn on 2016/12/14.
- */
-
-import React, {Component} from 'react';
+ * 我的页面
+ * @flow
+ * **/
+import React, {Component} from "react";
 import {
-    View,
     StyleSheet,
-    Text,
-    ScrollView,
-    TouchableHighlight,
+    View,
     Image,
-} from 'react-native'
-import BaseComponent from '../BaseComponent'
-import CustomKeyPage from './CustomKeyPage'
-import SortKeyPagePage from './SortKeyPagePage'
-import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
-import NavigationBar from '../../../js/common/NavigationBar'
+    Text,
+    Platform,
+    ScrollView,
+    TouchableHighlight
+} from "react-native";
+import NavigationBar from "../../common/NavigationBar";
 import {MORE_MENU} from "../../common/MoreMenu";
+import BaseComponent from '../BaseComponent'
+import CustomKeyPage from "./CustomKeyPage";
+import SortKeyPagePage from "./SortKeyPagePage";
+import {FLAG_LANGUAGE} from "../../expand/dao/LanguageDao";
 import GlobalStyles from '../../../res/styles/GlobalStyles'
 import CustomThemePage from './CustomTheme'
 import ViewUtils from '../../util/ViewUtils'
 import AboutPage from '../about/AboutPage'
 import AboutMePage from '../about/AboutMePage'
+import codePush from 'react-native-code-push'
 export default class MyPage extends BaseComponent {
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state = {
-            what: '',
+        this.state={
             customThemeViewVisible:false,
             theme:this.props.theme
         }
     }
-
+    update(){
+        codePush.sync({
+            updateDialog: {
+                appendReleaseDescription: true,
+                descriptionPrefix:'更新内容',
+                title:'更新',
+                mandatoryUpdateMessage:'',
+                mandatoryContinueButtonLabel:'更新',
+            },
+            mandatoryInstallMode:codePush.InstallMode.IMMEDIATE,
+        });
+    }
     renderCustomThemeView(){
         return (<CustomThemePage
             visible={this.state.customThemeViewVisible}
@@ -39,7 +51,6 @@ export default class MyPage extends BaseComponent {
             onClose={()=>this.setState({customThemeViewVisible:false})}
         />)
     }
-
     onClick(tab) {
         let TargetComponent, params = {...this.props,menuType: tab};
         switch (tab) {
@@ -54,7 +65,6 @@ export default class MyPage extends BaseComponent {
             case MORE_MENU.Remove_Key:
                 TargetComponent = CustomKeyPage;
                 params.flag = FLAG_LANGUAGE.flag_key;
-                params.isRemoveKey = true;
                 break;
             case MORE_MENU.Sort_Language:
                 TargetComponent = SortKeyPagePage;
@@ -73,6 +83,10 @@ export default class MyPage extends BaseComponent {
             case MORE_MENU.About:
                 TargetComponent=AboutPage;
                 break;
+            case '更新':
+                this.update();
+                break;
+
         }
         if (TargetComponent) {
             this.props.navigator.push({
@@ -88,12 +102,10 @@ export default class MyPage extends BaseComponent {
 
 
     render() {
-        var navigationBar = 
-        <NavigationBar
-            title='我的'
-            style={this.state.theme.styles.navBar}
-        />;
-
+        var navigationBar =
+            <NavigationBar
+                style={this.state.theme.styles.navBar}
+                title='我的'/>;
         return (
             <View style={GlobalStyles.root_container}>
                 {navigationBar}
@@ -148,17 +160,17 @@ export default class MyPage extends BaseComponent {
                     {/*关于作者*/}
                     <View style={GlobalStyles.line}/>
                     {this.getItem(MORE_MENU.About_Author, require('./img/ic_insert_emoticon.png'), '关于作者')}
+                    <View style={GlobalStyles.line}/>
+                    {this.getItem('更新', require('./img/ic_insert_emoticon.png'), '检测更新')}
                     <View style={[{marginBottom: 60}]}/>
                 </ScrollView>
                 {this.renderCustomThemeView()}
-            </View>)
+            </View>
+        );
     }
+
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-
-    },
     item: {
         backgroundColor: 'white',
         padding: 10, height: 60,
