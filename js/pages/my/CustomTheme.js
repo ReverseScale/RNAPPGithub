@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex:1,
         margin:10,
-        marginTop:Platform.OS==='ios'?20:10,
+        marginTop:Platform.OS==='ios'?45:10,
         backgroundColor:'white',
         borderRadius:3,
         shadowColor:'gray',

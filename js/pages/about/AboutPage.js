@@ -50,11 +50,11 @@ export default class AboutPage extends Component{
             case MORE_MENU.Website:
                 TargetComponent = WebViewPage;
                 params.title='GitHubPopular';
-                var url='http://www.devio.org/io/GitHubPopular/';
+                var url='https://reversescale.github.io';
                 params.url=url;
                 break;
             case MORE_MENU.Feedback:
-                var url='mailto://crazycodeboy@gmail.com';
+                var url='mailto://reversescale@icloud.com';
                 Linking.canOpenURL(url).then(supported => {
                     if (!supported) {
                         console.log('Can\'t handle url: ' + url);
@@ -86,8 +86,8 @@ export default class AboutPage extends Component{
         return this.aboutCommon.render(content, {
             'name': 'GitHub Popular',
             'description': '这是一个用来查看GitHub最受欢迎与最热项目的App,它基于React Native支持Android和iOS双平台。',
-            'avatar':'http://avatar.csdn.net/1/1/E/1_fengyuzhengfan.jpg',
-            'backgroundImg':'http://www.devio.org/io/GitHubPopular/img/for_githubpopular_about_me.jpg',
+            "avatar": "http://og1yl0w9z.bkt.clouddn.com/18-3-28/61685877.jpg",
+            "backgroundImg": "http://og1yl0w9z.bkt.clouddn.com/18-3-28/37407402.jpg",
         });
     }
 }

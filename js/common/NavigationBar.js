@@ -9,7 +9,7 @@ import {
     Text,
     View
 } from 'react-native'
-const NAV_BAR_HEIGHT_IOS = 44;
+const NAV_BAR_HEIGHT_IOS = 54;
 const NAV_BAR_HEIGHT_ANDROID = 50;
 const STATUS_BAR_HEIGHT = 20;
 const StatusBarShape = {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 19,
-        top: 5,
+        top: 0,
         color: '#FFFFFF',
     },
     navBarButton: {

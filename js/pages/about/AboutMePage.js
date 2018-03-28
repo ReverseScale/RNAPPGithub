@@ -29,19 +29,19 @@ const FLAG = {
         items: {
             PERSONAL_BLOG: {
                 title: '个人博客',
-                url: 'http://jiapenghui.com',
+                url: 'https://reversescale.github.io',
             },
             CSDN: {
-                title: 'CSDN',
-                url: 'http://blog.csdn.net/fengyuzhengfan',
+                title: 'Swifter.AI',
+                url: 'https://github.com/Swifter-AI',
             },
             JIANSHU: {
-                title: '简书',
-                url: 'http://www.jianshu.com/users/ca3943a4172a/latest_articles',
+                title: '掘金',
+                url: 'https://juejin.im/user/578300cc128fe100567e7fa2/posts',
             },
             GITHUB: {
                 title: 'GitHub',
-                url: 'https://github.com/crazycodeboy',
+                url: 'https://github.com/reversescale',
             },
         }
     },
@@ -50,11 +50,11 @@ const FLAG = {
         items: {
             QQ: {
                 title: 'QQ',
-                account: '1586866509',
+                account: '1129998515',
             },
             Email: {
                 title: 'Email',
-                account: 'crazycodeboy@gmail.com',
+                account: 'reversescale@icloud.com',
             },
         }
     },

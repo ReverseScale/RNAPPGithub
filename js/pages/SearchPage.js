@@ -259,10 +259,9 @@ var styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'stretch',
-        // backgroundColor:'red'
     },
     statusBar: {
-        height: 20,
+        height: 40,
     },
     textInput: {
         flex: 1,
@@ -294,7 +293,7 @@ var styles = StyleSheet.create({
         height:40,
         position:'absolute',
         left:10,
-        top:GlobalStyles.window_height-45,
+        top:GlobalStyles.window_height-60,
         right:10,
         borderRadius:3
     }
