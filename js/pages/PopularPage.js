@@ -106,7 +106,8 @@ export default class PopularPage extends BaseComponent {
     }
     render() {
         var statusBar={
-            backgroundColor: this.state.theme.themeColor
+            backgroundColor: this.state.theme.themeColor,
+            barStyle:'light-content',
         }
         let navigationBar =
             <NavigationBar

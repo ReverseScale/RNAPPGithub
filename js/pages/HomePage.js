@@ -20,6 +20,7 @@ import FavoritePage from './FavoritePage'
 import MyPage from './my/MyPage'
 import Toast,{DURATION} from 'react-native-easy-toast'
 import BaseComponent from './BaseComponent'
+import codePush from 'react-native-code-push'
 export const ACTION_HOME={A_SHOW_TOAST:'showToast',A_RESTART:'restart',A_THEME:'theme'};
 export const FLAG_TAB={
     flag_popularTab:'tb_popular',
@@ -36,10 +37,23 @@ export default class HomePage extends BaseComponent {
             theme:this.props.theme,
         }
     }
+    update(){
+        codePush.sync({
+            updateDialog: {
+                appendReleaseDescription: true,
+                descriptionPrefix:'更新内容',
+                title:'更新',
+                mandatoryUpdateMessage:'',
+                mandatoryContinueButtonLabel:'更新',
+            },
+            mandatoryInstallMode:codePush.InstallMode.ON_NEXT_RESTART,
+        });
+    }
     componentDidMount(){
         super.componentDidMount();
         this.listener = DeviceEventEmitter.addListener('ACTION_HOME',
             (action,params) => this.onAction(action,params));
+        this.update();
     }
 
     /**

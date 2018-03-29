@@ -66,6 +66,7 @@ import com.android.build.OutputFile
  */
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -91,7 +92,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -108,6 +109,13 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            buildConfigField "String", "CODEPUSH_KEY", '"_cDKgVQ5dQGm7OhbOujmuYj0DuxM9b3ab0f7-d927-44a6-8135-9610dbc7fe2b"'
+        }
+        releaseStaging {
+            buildConfigField "String", "CODEPUSH_KEY", '"_cDKgVQ5dQGm7OhbOujmuYj0DuxM9b3ab0f7-d927-44a6-8135-9610dbc7fe2b"'
+        }
+        debug {
+            buildConfigField "String", "CODEPUSH_KEY", '"1gIwz9bZBIduHRxQgmVvZfAtcehg9b3ab0f7-d927-44a6-8135-9610dbc7fe2b"'
         }
     }
     // applicationVariants are e.g. debug, release

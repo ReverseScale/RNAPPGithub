@@ -117,13 +117,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = CodePush;
 		};
-		342D08F7206A265E008D0F8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AF19F8FEB9514E8DBAA0F08E /* CodePush.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F886647B1F4ADB500036D01B;
-			remoteInfo = "CodePush-tvOS";
-		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -457,7 +450,6 @@
 			isa = PBXGroup;
 			children = (
 				342D08F6206A265E008D0F8D /* libCodePush.a */,
-				342D08F8206A265E008D0F8D /* libCodePush.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -744,13 +736,6 @@
 			fileType = archive.ar;
 			path = libCodePush.a;
 			remoteRef = 342D08F5206A265E008D0F8D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		342D08F8206A265E008D0F8D /* libCodePush.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCodePush.a;
-			remoteRef = 342D08F7206A265E008D0F8D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
@@ -1042,7 +1027,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODEPUSH_KEY = "_cDKgVQ5dQGm7OhbOujmuYj0DuxM9b3ab0f7-d927-44a6-8135-9610dbc7fe2b";
+				CODEPUSH_KEY = "1gIwz9bZBIduHRxQgmVvZfAtcehg9b3ab0f7-d927-44a6-8135-9610dbc7fe2b";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1118,7 +1103,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODEPUSH_KEY = "_cDKgVQ5dQGm7OhbOujmuYj0DuxM9b3ab0f7-d927-44a6-8135-9610dbc7fe2b";
+				CODEPUSH_KEY = "1gIwz9bZBIduHRxQgmVvZfAtcehg9b3ab0f7-d927-44a6-8135-9610dbc7fe2b";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1160,7 +1145,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODEPUSH_KEY = "1gIwz9bZBIduHRxQgmVvZfAtcehg9b3ab0f7-d927-44a6-8135-9610dbc7fe2b";
+				CODEPUSH_KEY = "_cDKgVQ5dQGm7OhbOujmuYj0DuxM9b3ab0f7-d927-44a6-8135-9610dbc7fe2b";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;

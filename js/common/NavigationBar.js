@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-
 import {
     StyleSheet,
     Platform,
@@ -22,6 +21,7 @@ export default class NavigationBar extends Component {
         style: View.propTypes.style,
         title: PropTypes.string,
         titleView: PropTypes.element,
+        titleLayoutStyle:View.propTypes.style,
         hide: PropTypes.bool,
         statusBar: PropTypes.shape(StatusBarShape),
         rightButton:  PropTypes.element,
@@ -57,12 +57,12 @@ export default class NavigationBar extends Component {
             </View>: null;
 
         let titleView = this.props.titleView ? this.props.titleView :
-            <Text style={styles.title}>{this.props.title}</Text>;
+            <Text ellipsizeMode="head" numberOfLines={1} style={styles.title}>{this.props.title}</Text>;
 
         let content = this.props.hide ? null :
             <View style={styles.navBar}>
                 {this.getButtonElement(this.props.leftButton)}
-                <View style={styles.navBarTitleContainer}>
+                <View style={[styles.navBarTitleContainer,this.props.titleLayoutStyle]}>
                     {titleView}
                 </View>
                 {this.getButtonElement(this.props.rightButton)}

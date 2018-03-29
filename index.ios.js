@@ -4,15 +4,10 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+
+import React, {Component} from 'react';
 import {
     AppRegistry,
-    Platform,
-    StyleSheet,
-    Navigator,
-    Image,
-    Text,
-    View,
 } from 'react-native';
 
 import setup from './js/pages/setup'
