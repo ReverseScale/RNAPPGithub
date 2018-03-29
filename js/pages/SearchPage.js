@@ -26,11 +26,15 @@ import Utils from '../util/Utils'
 import FavoriteDao from '../expand/dao/FavoriteDao'
 import {FLAG_STORAGE} from '../expand/dao/DataRepository'
 import ViewUtils from "../util/ViewUtils";
+import BackPressComponent from '../common/BackPressComponent'
+
 const API_URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
 export default class SearchPage extends Component {
     constructor(props) {
         super(props);
+        this.backPress=new BackPressComponent({backPress:(e)=>this.onBackPress(e)});
+
         this.favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
         this.favoriteKeys = [];
         this.keys=[];
@@ -46,9 +50,12 @@ export default class SearchPage extends Component {
         }
     }
     componentDidMount(){
+        this.backPress.componentDidMount();
         this.initKeys();
     }
+
     componentWillUnmount(){
+        this.backPress.componentWillUnmount();
         if(this.isKeyChange){
             DeviceEventEmitter.emit('ACTION_HOME',ACTION_HOME.A_RESTART);
         }
@@ -152,6 +159,7 @@ export default class SearchPage extends Component {
     onBackPress() {
         this.refs.input.blur();
         this.props.navigator.pop();
+        return true;
     }
 
     updateState(dic) {

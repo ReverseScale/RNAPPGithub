@@ -1,6 +1,12 @@
 package com.rnappgithub;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.cboy.rn.splashscreen.SplashScreen;
 import com.facebook.react.ReactActivity;
+import com.microsoft.codepush.react.CodePush;
+import com.cboy.rn.splashscreen.SplashScreenReactPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -11,5 +17,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "RNAPPGithub";
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this,true);
+        super.onCreate(savedInstanceState);
     }
 }

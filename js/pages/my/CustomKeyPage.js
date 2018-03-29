@@ -20,19 +20,30 @@ import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 import ArrayUtils from '../../util/ArrayUtils'
 import ViewUtils from '../../util/ViewUtils'
 import {ACTION_HOME,FLAG_TAB} from '../HomePage'
+import BackPressComponent from '../../common/BackPressComponent'
 export default class CustomKeyPage extends Component {
     constructor(props) {
         super(props);
+        this.backPress=new BackPressComponent({backPress:(e)=>this.onBackPress(e)});
         this.changeValues = [];
         this.isRemoveKey=this.props.isRemoveKey?true:false;
         this.state = {
             dataArray: []
         }
     }
-
-    componentDidMount() {
+    componentDidMount(){
+        this.backPress.componentDidMount();
         this.languageDao = new LanguageDao(this.props.flag);
         this.loadData();
+    }
+
+    onBackPress(e){
+        this.onBack();
+        return true;
+    }
+    
+    componentWillUnmount() {
+        this.backPress.componentWillUnmount();
     }
 
     loadData() {

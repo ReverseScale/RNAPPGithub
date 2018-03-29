@@ -20,10 +20,13 @@ import LanguageDao, {FLAG_LANGUAGE} from '../../expand/dao/LanguageDao'
 import {ACTION_HOME,FLAG_TAB} from '../HomePage'
 import ArrayUtils from '../../util/ArrayUtils'
 import ViewUtils from '../../util/ViewUtils'
+import BackPressComponent from '../../common/BackPressComponent'
 
 export default class SortKeyPage extends Component {
     constructor(props) {
         super(props);
+        this.backPress=new BackPressComponent({backPress:(e)=>this.onBackPress(e)});
+
         this.dataArray = [];
         this.sortResultArray = [];
         this.originalCheckedArray = [];
@@ -31,10 +34,17 @@ export default class SortKeyPage extends Component {
             checkedArray: []
         }
     }
-
-    componentDidMount() {
+    componentDidMount(){
+        this.backPress.componentDidMount();
         this.languageDao = new LanguageDao(this.props.flag);
         this.loadData();
+    }
+    onBackPress(e){
+        this.onBack();
+        return true;
+    }
+    componentWillUnmount() {
+        this.backPress.componentWillUnmount();
     }
 
     loadData() {

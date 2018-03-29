@@ -17,10 +17,12 @@ import {
 import NavigationBar from '../common/NavigationBar'
 import ViewUtils from '../util/ViewUtils'
 import FavoriteDao from '../expand/dao/FavoriteDao'
+import BackPressComponent from '../common/BackPressComponent'
 const TRENDING_URL = 'https://github.com/'
 export default class RepositoryDetail extends Component {
     constructor(props) {
         super(props);
+        this.backPress=new BackPressComponent({backPress:(e)=>this.onBackPress(e)});
         this.url = this.props.projectModel.item.html_url ? this.props.projectModel.item.html_url
             : TRENDING_URL + this.props.projectModel.item.fullName;
         var title = this.props.projectModel.item.full_name ? this.props.projectModel.item.full_name
@@ -35,7 +37,15 @@ export default class RepositoryDetail extends Component {
 
         }
     }
+    componentDidMount(){
+        this.backPress.componentDidMount();
+    }
+    onBackPress(e){
+        this.onBack();
+        return true;
+    }
     componentWillUnmount() {
+        this.backPress.componentWillUnmount();
         if (this.props.onUpdateFavorite)this.props.onUpdateFavorite();
     }
     setFavoriteState(isFavorite) {
