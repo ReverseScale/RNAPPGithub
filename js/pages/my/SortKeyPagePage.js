@@ -26,7 +26,6 @@ export default class SortKeyPage extends Component {
     constructor(props) {
         super(props);
         this.backPress=new BackPressComponent({backPress:(e)=>this.onBackPress(e)});
-
         this.dataArray = [];
         this.sortResultArray = [];
         this.originalCheckedArray = [];

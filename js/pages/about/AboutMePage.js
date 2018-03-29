@@ -92,6 +92,9 @@ export default class AboutMePage extends Component {
     componentDidMount() {
         this.aboutCommon.componentDidMount();
     }
+    componentWillUnmount() {
+        this.aboutCommon.componentWillUnmount();
+    }
     updateState(dic) {
         this.setState(dic);
     }

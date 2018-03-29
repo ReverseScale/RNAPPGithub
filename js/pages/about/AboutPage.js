@@ -38,6 +38,9 @@ export default class AboutPage extends Component{
     componentDidMount() {
         this.aboutCommon.componentDidMount();
     }
+    componentWillUnmount() {
+        this.aboutCommon.componentWillUnmount();
+    }
     updateState(dic){
         this.setState(dic);
     }

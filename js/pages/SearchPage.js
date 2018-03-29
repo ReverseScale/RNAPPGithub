@@ -156,9 +156,8 @@ export default class SearchPage extends Component {
     genFetchUrl(key) {
         return API_URL + key + QUERY_STR;
     }
-    onBackPress() {
-        this.refs.input.blur();
-        this.props.navigator.pop();
+    onBackPress(e){
+        this.onBack();
         return true;
     }
 
