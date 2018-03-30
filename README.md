@@ -14,7 +14,7 @@ Github 代码库：https://github.com/ReverseScale/RNAPPGithub.git
 * 6.ReactNative 项目发布前的优化、打包与上线
 
 # 目录结构：
-- 生命周期及使用场景
+- [生命周期及使用场景](#生命周期及使用场景)
 - 项目介绍
 - 组件化
 - 集成与管理
