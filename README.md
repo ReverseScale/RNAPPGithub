@@ -1,17 +1,31 @@
 # RNAPPGithub
 
-## 学习课程：
+# 学习课程：
 《双平台真实开发GitHub App React Native技术全面掌握》
 
 Github 代码库：https://github.com/ReverseScale/RNAPPGithub.git
 
-## 学习内容：
+# 知识点：
 * 1.整理 ReactNative 网络封装及常用的三方模块
 * 2.ReactNative 的 AsyncStorage数据库技术、离线缓存
 * 3.ReactNative 的数据 DAO 层设计技巧，数据状态实时更新
 * 4.ReactNative 的代码提取技巧，组合模式应用技巧，数据异步刷新与动态添加
 * 5.ReactNative 的版本升级、数据统计、社会化分享、第三方登录，热更新等
 * 6.ReactNative 项目发布前的优化、打包与上线
+
+# 目录结构：
+- 生命周期及使用场景
+- 项目介绍
+- 组件化
+- 集成与管理
+- FlexBox 布局
+- 组件封装
+- 本地持久化
+- 网络请求封装
+- 功能调试
+- 适配 iOS 和 Android 平台
+- 开源组件库的使用
+- 热更新 Code push
 
 ## 生命周期及使用场景
 常用方法：
@@ -81,6 +95,7 @@ ReactNative 组件被卸载前会调用，通常做一些清理内容。
 ---
 ## 项目介绍
 双平台效果预览：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16270d10d158f637?w=814&h=608&f=png&s=400633)
 
 React Native是React在移动端的跨平台方案。如果想更快地理解和掌握React Native开发，就必须先了解React。
@@ -88,12 +103,13 @@ React Native是React在移动端的跨平台方案。如果想更快地理解和
 React是FaceBook开源的一个前端框架，它起源于 Facebook 的内部项目，并于 2013 年 5 月开源。因为React 拥有较高的性能，代码逻辑非常简单，所以越来越多的人已开始关注和使用它，目前该框架在Github上已经有7万+star。
 
 ReactNative 技术导图：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16270d28bc94375d?w=718&h=306&f=png&s=92798)
 
-### 组件化
+## 组件化
 React采用组件化的方式开发，通过将view构建成组件，使得代码更加容易得到复用，能够很好的应用在大项目的开发中。有一句话说的很形象：在React中，构建应用就像搭积木一样。
 
-#### 组件化特征
+### 组件化特征
 React认为一个组件应该具有如下特征：
 
 - 可组合（Composeable）：一个组件易于和其它组件一起使用，或者嵌套在另一个组件内部。如果一个组件内部创建了另一个组件，那么说父组件拥有它创建的子组件，通过这个特性，一个复杂的UI可以拆分成多个简单的UI组件；
@@ -113,7 +129,7 @@ React认为一个组件应该具有如下特征：
 - 可维护：因为具有独立的功能和展示逻辑，所以便于定位和修改。
 
 
-#### 组件的属性与状态
+### 组件的属性与状态
 
 在React Native（React.js）里，组件所持有的数据分为两种：
 
@@ -161,6 +177,7 @@ constructor(props){
 - isLoading:是否正在刷新
 
 这两个state都是将来可能经常变化的。比如在网络请求以后，列表的数据源会被替换掉，这个时候就要调用:
+
 ```js
 this.setState({
       //把新的值newDataArr对象传给dataSource
@@ -169,21 +186,24 @@ this.setState({
 ```
 
 3.DOM
-DOM是前端的一个概念，暂时可以粗略理解为一个页面的树形结构。
+DOM 是前端的一个概念，暂时可以粗略理解为一个页面的树形结构。
 React 生命周期的三大阶段
 - Mounting：已插入真实 DOM
 - Updating：正在被重新渲染
 - Unmounting：已移出真实 DOM
 
 在每个阶段都有相应的状态和与之对应的回调函数，具体可以看下图：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16270debf54570c4?w=740&h=900&f=jpeg&s=63320)
+
 上图来自：贾鹏辉的技术博客：React Native之React速学教程(中)/)
 
-#### 集成与管理
+## 集成与管理
 1.指定版本初始化
 在终端输入react-native demo --version 0.40.0命令以后，就会初始化一个React Native版本为0.40.0的项目。这个最初项目里面直接就包含了iOS和Android的工程文件夹，可以用对应的IDE打开后编译运行。
 
 在新建一个React Native项目之后的根目录结构是这样的：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/1627105390f390e6?w=624&h=379&f=png&s=60739)
 
 2.使用 Cocoapods 管理 ReactNative
@@ -213,13 +233,15 @@ pod "yoga", :path => "./node_modules/react-native/ReactCommon/yoga"
 
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16271082c4091e40?w=707&h=628&f=png&s=121488)
 
-#### ReactNative 布局 FlexBox
+## FlexBox 布局 
 采用Flex布局的元素，被称为Flex container，其所有子元素被称为Flex item；容器默认存在两个轴，分别是主轴（main axis）和垂直的交叉轴（cross axis）,主轴开始的位置叫做main start，结束的位置叫main end；交叉轴的开始位置叫做cross start，结束的位置叫做cross end；单个item占据的主轴空间叫做main size，占据的交叉轴控件叫做cross size。
 
-如下图所示： 
+如下图所示：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16270e1ee5a277a9?w=563&h=333&f=png&s=10005)
 
 组件化驱动下，搜索结果页中展示的 Cell 与之前的列表页 Cell 可以重用：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16270e3fbd81a480?w=358&h=704&f=png&s=74402)
 
 我们把该组件定名为：RespositoryCell，结合代码来看一下具体的实现：
@@ -294,9 +316,10 @@ export default class RepositoryCell extends Component {
     - 底部背景的View组件又有三个子组件：View组件（显示作者信息），View组件（显示star信息）,收藏按钮。
     
 结构分解图：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16270dfa999713c4?w=739&h=165&f=png&s=27366)
 
-#### 组件封装
+## 组件封装
 
 | 我的页面 | 个人中心 |
 | ------------- | ------------- | 
@@ -375,13 +398,11 @@ export default class AboutPage extends Component{
 }
 ```
 
-#### 本地持久化
+## 本地持久化
 
 | 主题选择界面 | 切换主题后界面 |
 | ------------- | ------------- | 
 | ![](https://user-gold-cdn.xitu.io/2018/3/29/16270fccfcb56db1?w=358&h=704&f=png&s=35862) | ![](https://user-gold-cdn.xitu.io/2018/3/29/16270f47940dd642?w=358&h=704&f=png&s=89782) |
-
-
 
 在涉及如主题变更等操作时，需要将状态信息保存，这时就需要用到类似于iOS 中的NSUserDefault， AsyncStorage 是React Native中的 Key-Value 存储系统，可以做本地持久化。
 
@@ -420,7 +441,7 @@ static multiRemove(keys, callback:(errors))
 static clear(callback:(error))
 ```
 
-#### 网络请求
+## 网络请求封装
 
 在React Native中，经常使用Fetch函数来实现网络请求，它支持GET和POST请求并返回一个Promise对象，这个对象包含一个正确的结果和一个错误的结果。
 
@@ -480,7 +501,7 @@ static get(url){
 ```
 因为只是GET请求，所以不需要配置请求体，而且因为这个fetch函数返回值是一个Promise对象， 所以我们可以用.then和.catch来捕捉正确和错误的结果。
 
-#### 功能调试
+## 功能调试
 
 我们可以使用浏览器的开发者工具来调试React Native项目，可以通过打断点的方式来看数据信息以及方法的调用：
 
@@ -492,7 +513,7 @@ static get(url){
 
 ![](https://user-gold-cdn.xitu.io/2018/3/29/1627102aa331c056?w=957&h=645&f=png&s=213866)
 
-#### 适配iOS和Android平台
+## 适配 iOS 和 Android 平台
 
 因为React Native讲求的是一份代码跑在两个平台上，而客观上这两个平台又有一些不一样的地方，所以就需要在别要的时候做一下两个平台的适配。
 
@@ -515,7 +536,7 @@ const NAV_BAR_HEIGHT_ANDROID = 50;
 建议在调试程序的时候，同时打开iOS和Android的模拟器进行调试，因为有些地方可能在某个平台上是没问题的，但是另一个平台上有问题，这就需要使用Platform来区分平台。
 
 
-#### 开源组件库
+## 开源组件库的使用
 ReactNative 的组件与原生的组件有许多共同之处，如下拉刷新，同样的 Github 中开源组件已经相当完善。
 
 ![](https://user-gold-cdn.xitu.io/2018/3/29/162710e8caa81348?w=347&h=706&f=gif&s=599458)
@@ -544,9 +565,10 @@ npm install --save react-native-popover@0.5.0
 npm install --react-native-splash-screen@2.0.0
 ```
 下图为使用 react-native-splash-screen 后的效果演示：
+
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16271098701076c5?w=358&h=704&f=png&s=31664)
 
-#### 热更新 Code push
+## 热更新 Code push
 CodePush 是微软提供的一套用于热更新 React Native 和 Cordova 应用的服务。
 
 CodePush 是提供给 React Native 和 Cordova 开发者直接部署移动应用更新给用户设备的云服务。CodePush 作为一个中央仓库，开发者可以推送更新 (JS, HTML, CSS and images)，应用可以从客户端 SDK 里面查询更新。
@@ -576,17 +598,17 @@ Code-Push iOS更新打包方法：
 react-native bundle --platform ios --entry-file index.ios.js --bundle-output release_ios/main.jsbundle --assets-dest release_ios/ --dev fasle
 ```
 
-## 总结
+# 总结
 之前也有零零散散的调研这门技术，但是经过系统的 15 个下午的坚持学习，深感跨平台技术的独到之处，特别是在与原生交互的编写上简直让人欲生欲死，还好在 Github 上已经有各路大神开源的各种方便开发的组件库可以供我们使用。
 
-## 分享链接
+# 分享链接
 《React Native 开发常用命令行（持续更新）》(https://juejin.im/post/5abc54c86fb9a028da7c998c)
 
 《ReactNative 开发常用的三方模块》(https://www.jianshu.com/p/53ff78168acc)
 
 《使用VS Code调试React-Native程序》（https://jingyan.baidu.com/article/ad310e80fb13fc1849f49ed1.html）
 
-## 参考资料
+# 参考资料
 - React Native中文网
 
 - 贾鹏辉的技术博客
