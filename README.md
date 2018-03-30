@@ -16,16 +16,16 @@ Github 代码库：https://github.com/ReverseScale/RNAPPGithub.git
 # 目录结构：
 - [生命周期及使用场景](#生命周期及使用场景)
 - [项目介绍](#项目介绍)
-- [组件化](组件化)
-- [集成与管理](集成与管理)
-- [FlexBox 布局](FlexBox 布局)
-- [组件封装](组件封装)
-- [本地持久化](本地持久化)
-- [网络请求封装](网络请求封装)
-- [功能调试](功能调试)
-- [适配 iOS 和 Android 平台](适配 iOS 和 Android 平台)
-- [开源组件库的使用](开源组件库的使用)
-- [热更新 Code push](热更新 Code push)
+- [组件化](#组件化)
+- [集成与管理](#集成与管理)
+- [FlexBox 布局](#FlexBox 布局)
+- [组件封装](#组件封装)
+- [本地持久化](#本地持久化)
+- [网络请求封装](#网络请求封装)
+- [功能调试](#功能调试)
+- [适配 iOS 和 Android 平台](#适配 iOS 和 Android 平台)
+- [开源组件库的使用](#开源组件库的使用)
+- [热更新 Code push](#热更新 Code push)
 
 ## 生命周期及使用场景
 常用方法：
@@ -233,7 +233,7 @@ pod "yoga", :path => "./node_modules/react-native/ReactCommon/yoga"
 
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16271082c4091e40?w=707&h=628&f=png&s=121488)
 
-## FlexBox 布局 
+## FlexBox 布局
 采用Flex布局的元素，被称为Flex container，其所有子元素被称为Flex item；容器默认存在两个轴，分别是主轴（main axis）和垂直的交叉轴（cross axis）,主轴开始的位置叫做main start，结束的位置叫main end；交叉轴的开始位置叫做cross start，结束的位置叫做cross end；单个item占据的主轴空间叫做main size，占据的交叉轴控件叫做cross size。
 
 如下图所示：
