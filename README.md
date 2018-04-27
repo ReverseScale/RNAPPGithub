@@ -535,6 +535,8 @@ const NAV_BAR_HEIGHT_ANDROID = 50;
 
 建议在调试程序的时候，同时打开iOS和Android的模拟器进行调试，因为有些地方可能在某个平台上是没问题的，但是另一个平台上有问题，这就需要使用Platform来区分平台。
 
+PS：此项目并没有进行 Android 的运行测试，基本配置已经完成，Android 优化计划中。
+
 
 ## 开源组件库的使用
 ReactNative 的组件与原生的组件有许多共同之处，如下拉刷新，同样的 Github 中开源组件已经相当完善。
