@@ -18,14 +18,14 @@ Github 代码库：https://github.com/ReverseScale/RNAPPGithub.git
 - [项目介绍](#项目介绍)
 - [组件化](#组件化)
 - [集成与管理](#集成与管理)
-- [布局约束](#布局约束)
+- [FlexBox 布局](#FlexBox 布局)
 - [组件封装](#组件封装)
 - [本地持久化](#本地持久化)
 - [网络请求封装](#网络请求封装)
 - [功能调试](#功能调试)
-- [双平台适配](#适配双平台适配)
+- [适配 iOS 和 Android 平台](#适配 iOS 和 Android 平台)
 - [开源组件库的使用](#开源组件库的使用)
-- [热更新](#热更新)
+- [热更新 Code push](#热更新 Code push)
 
 ## 生命周期及使用场景
 常用方法：
@@ -233,7 +233,7 @@ pod "yoga", :path => "./node_modules/react-native/ReactCommon/yoga"
 
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16271082c4091e40?w=707&h=628&f=png&s=121488)
 
-## 布局约束
+## FlexBox 布局
 采用Flex布局的元素，被称为Flex container，其所有子元素被称为Flex item；容器默认存在两个轴，分别是主轴（main axis）和垂直的交叉轴（cross axis）,主轴开始的位置叫做main start，结束的位置叫main end；交叉轴的开始位置叫做cross start，结束的位置叫做cross end；单个item占据的主轴空间叫做main size，占据的交叉轴控件叫做cross size。
 
 如下图所示：
@@ -513,7 +513,7 @@ static get(url){
 
 ![](https://user-gold-cdn.xitu.io/2018/3/29/1627102aa331c056?w=957&h=645&f=png&s=213866)
 
-## 双平台适配
+## 适配 iOS 和 Android 平台
 
 因为React Native讲求的是一份代码跑在两个平台上，而客观上这两个平台又有一些不一样的地方，所以就需要在别要的时候做一下两个平台的适配。
 
@@ -570,7 +570,7 @@ npm install --react-native-splash-screen@2.0.0
 
 ![](https://user-gold-cdn.xitu.io/2018/3/29/16271098701076c5?w=358&h=704&f=png&s=31664)
 
-## 热更新
+## 热更新 Code push
 CodePush 是微软提供的一套用于热更新 React Native 和 Cordova 应用的服务。
 
 CodePush 是提供给 React Native 和 Cordova 开发者直接部署移动应用更新给用户设备的云服务。CodePush 作为一个中央仓库，开发者可以推送更新 (JS, HTML, CSS and images)，应用可以从客户端 SDK 里面查询更新。
