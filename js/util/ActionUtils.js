@@ -1,19 +1,13 @@
-import RepositoryDetail from '../pages/RepositoryDetail'
+import RepositoryDetail from '../page/RepositoryDetail'
 import DataRepository, {FLAG_STORAGE} from '../expand/dao/DataRepository'
-
+import NavigatorUtil from '../util/NavigatorUtil'
 export default class ActionUtils {
     /**
      * 跳转到详情页
      * @param params 要传递的一些参数
      */
     static onSelectRepository(params) {
-        var {navigator}=params;
-        navigator.push({
-            component: RepositoryDetail,
-            params: {
-                ...params
-            },
-        });
+        NavigatorUtil.goToRepositoryDetail(params);
     }
     /**
      * favoriteIcon单击回调函数

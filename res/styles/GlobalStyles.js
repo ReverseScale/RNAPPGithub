@@ -2,7 +2,6 @@
  * 全局样式
  * @flow
  */
-
 import {
     Dimensions
 }from 'react-native'

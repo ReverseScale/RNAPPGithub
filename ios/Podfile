@@ -5,11 +5,19 @@ target 'RNAPPGithub' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
 
-  # Pods for RNAPPGithub
+    pod 'UMengAnalytics'
+    pod 'UMengUShare/UI'
+    # 集成新浪微博
+    pod 'UMengUShare/Social/Sina'
+    # 集成微信
+    pod 'UMengUShare/Social/WeChat'
+    # 集成QQ
+    pod 'UMengUShare/Social/QQ'
+    # 集成邮件
+    pod 'UMengUShare/Social/Email'
+    # 集成短信
+    pod 'UMengUShare/Social/SMS'
 
-  target 'RNAPPGithubTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  # Pods for RNAPPGithub
 
 end

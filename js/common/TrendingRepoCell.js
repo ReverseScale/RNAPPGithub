@@ -21,19 +21,27 @@ export default class TrendingRepoCell extends Component {
         super(props);
         this.state = {
             isFavorite: this.props.projectModel.isFavorite,
-            favoriteIcon: this.props.projectModel.isFavorite ? require('../../res/images/ic_star.png') : require('../../res/images/ic_unstar_transparent.png'),
+            favoriteIcon: TrendingRepoCell.getIcon(this.props.projectModel.isFavorite),
         };
     }
-
-    componentWillReceiveProps(nextProps) {//当从当前页面切换走，再切换回来后
-        this.setFavoriteState(nextProps.projectModel.isFavorite)
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const isFavorite = nextProps.projectModel.isFavorite;
+        if (prevState.isFavorite !== isFavorite) {
+            return {
+                isFavorite: isFavorite,
+                favoriteIcon: TrendingRepoCell.getIcon(isFavorite)
+            }
+        }
+        return null;
     }
-
+    static getIcon(isFavorite){
+        return isFavorite?require('../../res/images/ic_star.png') : require('../../res/images/ic_unstar_transparent.png');
+    }
     setFavoriteState(isFavorite) {
         this.props.projectModel.isFavorite = isFavorite;
         this.setState({
             isFavorite: isFavorite,
-            favoriteIcon: isFavorite ? require('../../res/images/ic_star.png') : require('../../res/images/ic_unstar_transparent.png')
+            favoriteIcon: TrendingRepoCell.getIcon(isFavorite)
         })
     }
 

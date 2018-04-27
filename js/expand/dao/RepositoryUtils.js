@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import Utils from '../../util/Utils'
 import DataRepository, {FLAG_STORAGE} from '../../expand/dao/DataRepository'
+
 export default class RepositoryUtils {
     constructor(aboutCommon) {
         this.aboutCommon = aboutCommon;

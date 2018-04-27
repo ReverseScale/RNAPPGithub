@@ -4,7 +4,7 @@
 
 
 import React, {Component, PropTypes} from "react";
-import {BackAndroid} from "react-native";
+import {BackHandler} from "react-native";
 
 export default class BackPressComponent{
     constructor(props){
@@ -12,10 +12,10 @@ export default class BackPressComponent{
         this.props=props;
     }
     componentDidMount(){
-        if(this.props.backPress)BackAndroid.addEventListener('hardwareBackPress',this._hardwareBackPress);
+        if(this.props.backPress)BackHandler.addEventListener('hardwareBackPress',this._hardwareBackPress);
     }
     componentWillUnmount(){
-        if(this.props.backPress)BackAndroid.removeEventListener('hardwareBackPress',this._hardwareBackPress);
+        if(this.props.backPress)BackHandler.removeEventListener('hardwareBackPress',this._hardwareBackPress);
     }
     onHardwareBackPress(e){
         return this.props.backPress(e);
