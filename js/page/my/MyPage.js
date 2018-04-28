@@ -24,6 +24,7 @@ import ViewUtils from '../../util/ViewUtils'
 import NavigatorUtil from '../../util/NavigatorUtil'
 import AboutPage from '../about/AboutPage'
 import AboutMePage from '../about/AboutMePage'
+import codePush from 'react-native-code-push'
 
 export default class MyPage extends BaseComponent {
     constructor(props){
@@ -86,6 +87,32 @@ export default class MyPage extends BaseComponent {
         }
     }
 
+    /**
+     * 向CodePush服务器检查更新
+     */
+    update() {
+        codePush.sync({
+            updateDialog: {
+                appendReleaseDescription: true,
+                descriptionPrefix: '更新内容',
+                title: '更新',
+                mandatoryUpdateMessage: '',
+                mandatoryContinueButtonLabel: '更新',
+            },
+            mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
+        });
+        // codePush.sync(
+        //     {}, // codepush options
+        //     (syncStatus) => { // status callback
+        //           // do smthing with the sync status
+        //     },
+        //     (progress) => { // progress callback (Specify a function here otherwise you'll get a warning)
+        //           // do smthing with the progress value
+        //     }
+        // );
+    }
+    
+
     getItem(tag, icon, text) {
         return ViewUtils.getSettingItem(()=>this.onClick(tag), icon, text,this.state.theme.styles.tabBarSelectedIcon,null);
     }
@@ -147,6 +174,9 @@ export default class MyPage extends BaseComponent {
                     {/*自定义主题*/}
                     <View style={GlobalStyles.line}/>
                     {this.getItem(MORE_MENU.Custom_Theme, require('./img/ic_view_quilt.png'), '自定义主题')}
+                    {/*更新*/}
+                    <View style={GlobalStyles.line}/>
+                    {this.getItem('更新', require('./img/ic_check_box_outline_blank.png'), '检查更新')}
                     {/*关于作者*/}
                     <View style={GlobalStyles.line}/>
                     {this.getItem(MORE_MENU.About_Author, require('./img/ic_insert_emoticon.png'), '关于作者')}

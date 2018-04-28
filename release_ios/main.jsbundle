@@ -66219,6 +66219,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 this.listener = _reactNative.DeviceEventEmitter.addListener('ACTION_HOME', function (action, params) {
                     return _this2.onAction(action, params);
                 });
+                this.update();
             }
         }, {
             key: "onAction",
@@ -88430,6 +88431,10 @@ __d(function (global, _require, module, exports, _dependencyMap) {
 
     var _AboutMePage2 = babelHelpers.interopRequireDefault(_AboutMePage);
 
+    var _reactNativeCodePush = _require(_dependencyMap[14], "react-native-code-push");
+
+    var _reactNativeCodePush2 = babelHelpers.interopRequireDefault(_reactNativeCodePush);
+
     var MyPage = function (_BaseComponent) {
         babelHelpers.inherits(MyPage, _BaseComponent);
 
@@ -88460,7 +88465,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     },
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 37
+                        lineNumber: 38
                     }
                 }));
             }
@@ -88522,6 +88527,20 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 }
             }
         }, {
+            key: "update",
+            value: function update() {
+                _reactNativeCodePush2.default.sync({
+                    updateDialog: {
+                        appendReleaseDescription: true,
+                        descriptionPrefix: '更新内容',
+                        title: '更新',
+                        mandatoryUpdateMessage: '',
+                        mandatoryContinueButtonLabel: '更新'
+                    },
+                    mandatoryInstallMode: _reactNativeCodePush2.default.InstallMode.ON_NEXT_RESTART
+                });
+            }
+        }, {
             key: "getItem",
             value: function getItem(tag, icon, text) {
                 var _this3 = this;
@@ -88540,7 +88559,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     title: "\u6211\u7684",
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 96
+                        lineNumber: 113
                     }
                 });
 
@@ -88550,7 +88569,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         style: _GlobalStyles2.default.root_container,
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 100
+                            lineNumber: 117
                         }
                     },
                     navigationBar,
@@ -88559,7 +88578,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 102
+                                lineNumber: 119
                             }
                         },
                         _react2.default.createElement(
@@ -88570,7 +88589,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 },
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 104
+                                    lineNumber: 121
                                 }
                             },
                             _react2.default.createElement(
@@ -88581,7 +88600,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                     }],
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 106
+                                        lineNumber: 123
                                     }
                                 },
                                 _react2.default.createElement(
@@ -88593,11 +88612,11 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                         },
                                         __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 107
+                                            lineNumber: 124
                                         }
                                     },
                                     _react2.default.createElement(_reactNative.Image, {
-                                        source: _require(_dependencyMap[14], '../../../res/images/ic_trending.png'),
+                                        source: _require(_dependencyMap[15], '../../../res/images/ic_trending.png'),
                                         style: [{
                                             width: 40,
                                             height: 40,
@@ -88605,7 +88624,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                         }, this.state.theme.styles.tabBarSelectedIcon],
                                         __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 108
+                                            lineNumber: 125
                                         }
                                     }),
                                     _react2.default.createElement(
@@ -88613,14 +88632,14 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                         {
                                             __source: {
                                                 fileName: _jsxFileName,
-                                                lineNumber: 110
+                                                lineNumber: 127
                                             }
                                         },
                                         "GitHub Popular"
                                     )
                                 ),
                                 _react2.default.createElement(_reactNative.Image, {
-                                    source: _require(_dependencyMap[15], '../../../res/images/ic_tiaozhuan.png'),
+                                    source: _require(_dependencyMap[16], '../../../res/images/ic_tiaozhuan.png'),
                                     style: [{
                                         opacity: 1,
                                         marginRight: 10,
@@ -88630,7 +88649,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                     }, this.state.theme.styles.tabBarSelectedIcon],
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 112
+                                        lineNumber: 129
                                     }
                                 })
                             )
@@ -88639,7 +88658,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 122
+                                lineNumber: 139
                             }
                         }),
                         _react2.default.createElement(
@@ -88648,7 +88667,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 style: styles.groupTitle,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 125
+                                    lineNumber: 142
                                 }
                             },
                             "\u8D8B\u52BF\u7BA1\u7406"
@@ -88657,25 +88676,25 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 127
+                                lineNumber: 144
                             }
                         }),
-                        this.getItem(_MoreMenu.MORE_MENU.Custom_Language, _require(_dependencyMap[16], './img/ic_custom_language.png'), '自定义语言'),
+                        this.getItem(_MoreMenu.MORE_MENU.Custom_Language, _require(_dependencyMap[17], './img/ic_custom_language.png'), '自定义语言'),
                         _react2.default.createElement(_reactNative.View, {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 130
+                                lineNumber: 147
                             }
                         }),
-                        this.getItem(_MoreMenu.MORE_MENU.Sort_Language, _require(_dependencyMap[17], './img/ic_swap_vert.png'), '语言排序'),
+                        this.getItem(_MoreMenu.MORE_MENU.Sort_Language, _require(_dependencyMap[18], './img/ic_swap_vert.png'), '语言排序'),
                         _react2.default.createElement(
                             _reactNative.Text,
                             {
                                 style: styles.groupTitle,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 134
+                                    lineNumber: 151
                                 }
                             },
                             "\u6700\u70ED\u7BA1\u7406"
@@ -88684,33 +88703,33 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 136
+                                lineNumber: 153
                             }
                         }),
-                        this.getItem(_MoreMenu.MORE_MENU.Custom_Key, _require(_dependencyMap[16], './img/ic_custom_language.png'), '自定义标签'),
+                        this.getItem(_MoreMenu.MORE_MENU.Custom_Key, _require(_dependencyMap[17], './img/ic_custom_language.png'), '自定义标签'),
                         _react2.default.createElement(_reactNative.View, {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 139
+                                lineNumber: 156
                             }
                         }),
-                        this.getItem(_MoreMenu.MORE_MENU.Sort_Key, _require(_dependencyMap[17], './img/ic_swap_vert.png'), '标签排序'),
+                        this.getItem(_MoreMenu.MORE_MENU.Sort_Key, _require(_dependencyMap[18], './img/ic_swap_vert.png'), '标签排序'),
                         _react2.default.createElement(_reactNative.View, {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 142
+                                lineNumber: 159
                             }
                         }),
-                        this.getItem(_MoreMenu.MORE_MENU.Remove_Key, _require(_dependencyMap[18], './img/ic_remove.png'), '标签移除'),
+                        this.getItem(_MoreMenu.MORE_MENU.Remove_Key, _require(_dependencyMap[19], './img/ic_remove.png'), '标签移除'),
                         _react2.default.createElement(
                             _reactNative.Text,
                             {
                                 style: styles.groupTitle,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 146
+                                    lineNumber: 163
                                 }
                             },
                             "\u8BBE\u7F6E"
@@ -88719,23 +88738,31 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 148
+                                lineNumber: 165
                             }
                         }),
-                        this.getItem(_MoreMenu.MORE_MENU.Custom_Theme, _require(_dependencyMap[19], './img/ic_view_quilt.png'), '自定义主题'),
+                        this.getItem(_MoreMenu.MORE_MENU.Custom_Theme, _require(_dependencyMap[20], './img/ic_view_quilt.png'), '自定义主题'),
                         _react2.default.createElement(_reactNative.View, {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 151
+                                lineNumber: 168
                             }
                         }),
-                        this.getItem(_MoreMenu.MORE_MENU.About_Author, _require(_dependencyMap[20], './img/ic_insert_emoticon.png'), '关于作者'),
+                        this.getItem('更新', _require(_dependencyMap[21], './img/ic_check_box_outline_blank.png'), '检查更新'),
                         _react2.default.createElement(_reactNative.View, {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 153
+                                lineNumber: 171
+                            }
+                        }),
+                        this.getItem(_MoreMenu.MORE_MENU.About_Author, _require(_dependencyMap[22], './img/ic_insert_emoticon.png'), '关于作者'),
+                        _react2.default.createElement(_reactNative.View, {
+                            style: _GlobalStyles2.default.line,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 173
                             }
                         })
                     ),
@@ -88765,7 +88792,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
             color: 'gray'
         }
     });
-},548,[12,22,434,474,457,475,483,466,456,455,438,419,486,488,507,439,503,504,506,505,499],"js/page/my/MyPage.js");
+},548,[12,22,434,474,457,475,483,466,456,455,438,419,486,488,549,507,439,503,504,506,505,482,499],"js/page/my/MyPage.js");
 __d(function (global, _require, module, exports, _dependencyMap) {
   var _jsxFileName = "/Users/Stevens/RNAPPGithub/node_modules/react-native-code-push/CodePush.js";
 

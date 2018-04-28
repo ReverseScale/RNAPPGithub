@@ -62,13 +62,22 @@ export default class HomePage extends BaseComponent {
             },
             mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESTART,
         });
+        // codePush.sync(
+        //     {}, // codepush options
+        //     (syncStatus) => { // status callback
+        //           // do smthing with the sync status
+        //     },
+        //     (progress) => { // progress callback (Specify a function here otherwise you'll get a warning)
+        //           // do smthing with the progress value
+        //     }
+        // );
     }
 
     componentDidMount() {
         super.componentDidMount();
         this.listener = DeviceEventEmitter.addListener('ACTION_HOME',
             (action, params) => this.onAction(action, params));
-        // this.update();
+        this.update();
     }
 
     /**
