@@ -39,6 +39,38 @@ Github 代码库：https://github.com/ReverseScale/RNAPPGithub.git
 - componentDidUpdate
 - componentWillUnmount:
 
+![](http://og1yl0w9z.bkt.clouddn.com/18-4-28/90277183.jpg)
+
+在 React 17.0 后 ReactNative 对生命周期函数方法进行调整如下，过渡阶段可以使用 UNSAFE_ 前缀，建议使用推荐方法。
+
+```js
+class ExampleComponent extends React.Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // Called after a component is instantiated or before it receives new props.
+    // Return an object to update state in response to prop changes.
+    // Return null to indicate no change to state.
+  }
+
+  UNSAFE_componentWillMount() {
+    // New name for componentWillMount()
+    // Indicates that this method can be unsafe for async rendering.
+    // Prefer componentDidMount() instead.
+  }
+
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
+    // New name for componentWillUpdate()
+    // Indicates that this method can be unsafe for async rendering.
+    // Prefer componentDidUpdate() instead.
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    // New name for componentWillReceiveProps()
+    // Indicates that this method can be unsafe for async rendering.
+    // Prefer static getDerivedStateFromProps() instead.
+  }
+}
+```
+
 ### 1.constructor:
 在组件创建的时候调用一次,这个方法进行this.state初始化状态机。
 ```js
