@@ -48,7 +48,7 @@ export default class AboutPage extends Component{
             case MORE_MENU.Website:
                 TargetComponent = 'WebViewPage';
                 params.title='GitHubPopular';
-                var url='http://www.devio.org/io/GitHubPopular/';
+                var url='https://reversescale.github.io';
                 params.url=url;
                 break;
             case MORE_MENU.Feedback:

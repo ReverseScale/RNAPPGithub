@@ -132,7 +132,7 @@ export default class MyPage extends BaseComponent {
                         onPress={()=>this.onClick(MORE_MENU.About)}>
                         <View style={[styles.item, {height: 90}]}>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                                <Image source={require('../../../res/images/ic_trending.png')}
+                                <Image source={require('../../../res/images/ic_trendingGithub.png')}
                                        style={[{width: 40, height: 40, marginRight: 10},this.state.theme.styles.tabBarSelectedIcon]}/>
                                 <Text>GitHub Popular</Text>
                             </View>
