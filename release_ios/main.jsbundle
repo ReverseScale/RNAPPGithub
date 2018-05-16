@@ -76163,14 +76163,11 @@ __d(function (global, _require, module, exports, _dependencyMap) {
         babelHelpers.createClass(SearchPage, [{
             key: "componentDidMount",
             value: function componentDidMount() {
-                this.backPress.componentDidMount();
                 this.initKeys();
             }
         }, {
             key: "componentWillUnmount",
             value: function componentWillUnmount() {
-                this.backPress.componentWillUnmount();
-
                 if (this.isKeyChange) {
                     _reactNative.DeviceEventEmitter.emit('ACTION_HOME', _HomePage.ACTION_HOME.A_RESTART);
                 }
