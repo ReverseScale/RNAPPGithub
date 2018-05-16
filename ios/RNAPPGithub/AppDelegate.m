@@ -19,15 +19,14 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [self initUmeng];
   
   NSURL *jsCodeLocation;
 
   #ifdef DEBUG
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-//  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   #else
   jsCodeLocation = [CodePush bundleURL];
   #endif
@@ -43,11 +42,11 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  [SplashScreen show];
+//  [SplashScreen show];
   return YES;
 }
 
--(void)initUmeng{
+- (void)initUmeng {
   //UMeng 统计
   UMConfigInstance.appKey = UM_AppKey;
   UMConfigInstance.channelId = UM_ChannelId;
@@ -70,8 +69,7 @@
   //设置新浪的appKey和appSecret
   [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:AppKey_WB  appSecret:AppSecret_WB redirectURL:@"http://sns.whalecloud.com/sina2/callback"];
 }
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
   if (!result) {
     // 其他如支付等SDK的回调

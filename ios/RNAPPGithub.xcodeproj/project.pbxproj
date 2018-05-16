@@ -512,8 +512,8 @@
 			isa = PBXGroup;
 			children = (
 				3422B74F209300FF0098F9D2 /* UShare.h */,
-				3422B750209300FF0098F9D2 /* Constants.h */,
 				3422B751209300FF0098F9D2 /* UShare.m */,
+				3422B750209300FF0098F9D2 /* Constants.h */,
 			);
 			path = util;
 			sourceTree = "<group>";
