@@ -52,12 +52,10 @@ export default class SearchPage extends Component {
     }
 
     componentDidMount() {
-        // this.backPress.componentDidMount();
         this.initKeys();
     }
 
     componentWillUnmount() {
-        // this.backPress.componentWillUnmount();
         if (this.isKeyChange) {
             DeviceEventEmitter.emit('ACTION_HOME', ACTION_HOME.A_RESTART);
         }

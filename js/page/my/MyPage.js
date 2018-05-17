@@ -54,6 +54,7 @@ export default class MyPage extends BaseComponent {
                 break;
             case MORE_MENU.Remove_Key:
                 TargetComponent = 'CustomKeyPage';
+                params.isRemoveKey = true;
                 params.flag = FLAG_LANGUAGE.flag_key;
                 break;
             case MORE_MENU.Sort_Language:
