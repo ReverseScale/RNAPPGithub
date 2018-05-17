@@ -75780,16 +75780,16 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     "name": "MySQL",
     "checked": false
   }, {
-    "path": " AngularJS",
-    "name": " AngularJS",
+    "path": "AngularJS",
+    "name": "AngularJS",
     "checked": false
   }, {
-    "path": " jQuery",
-    "name": " jQuery",
+    "path": "jQuery",
+    "name": "jQuery",
     "checked": false
   }, {
-    "path": " react",
-    "name": " React",
+    "path": "react",
+    "name": "React",
     "checked": true
   }];
 },467,[],"res/data/keys.json");
@@ -76350,7 +76350,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     style: styles.textInput,
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 196
+                        lineNumber: 194
                     }
                 });
 
@@ -76364,7 +76364,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         },
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 203
+                            lineNumber: 201
                         }
                     },
                     _react2.default.createElement(
@@ -76375,7 +76375,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             },
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 209
+                                lineNumber: 207
                             }
                         },
                         _react2.default.createElement(
@@ -76384,7 +76384,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 style: styles.title,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 210
+                                    lineNumber: 208
                                 }
                             },
                             this.state.rightButtonText
@@ -76403,7 +76403,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         },
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 213
+                            lineNumber: 211
                         }
                     },
                     backButton,
@@ -76432,7 +76432,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     },
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 227
+                        lineNumber: 225
                     }
                 });
             }
@@ -76450,7 +76450,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         }],
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 244
+                            lineNumber: 242
                         }
                     });
                 }
@@ -76465,7 +76465,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     },
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 246
+                        lineNumber: 244
                     }
                 }) : null;
                 var indicatorView = this.state.isLoading ? _react2.default.createElement(_reactNative.ActivityIndicator, {
@@ -76474,7 +76474,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     animating: this.state.isLoading,
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 252
+                        lineNumber: 250
                     }
                 }) : null;
 
@@ -76486,7 +76486,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         },
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 257
+                            lineNumber: 255
                         }
                     },
                     indicatorView,
@@ -76504,7 +76504,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         },
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 262
+                            lineNumber: 260
                         }
                     },
                     _react2.default.createElement(
@@ -76515,7 +76515,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             },
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 269
+                                lineNumber: 267
                             }
                         },
                         _react2.default.createElement(
@@ -76524,7 +76524,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 style: styles.title,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 270
+                                    lineNumber: 268
                                 }
                             },
                             "\u6DFB\u52A0\u6807\u7B7E"
@@ -76539,7 +76539,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         style: _GlobalStyles2.default.root_container,
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 273
+                            lineNumber: 271
                         }
                     },
                     statusBar,
@@ -76552,7 +76552,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         },
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 282
+                            lineNumber: 280
                         }
                     })
                 );
@@ -80399,7 +80399,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
     },
     "author": {
       "name": "WhatsXie",
-      "description": "专注于移动开发，分享知识，共享快乐。",
+      "description": "专注于移动开发，分享知识",
       "avatar": "http://og1yl0w9z.bkt.clouddn.com/18-3-28/61685877.jpg",
       "backgroundImg": "http://og1yl0w9z.bkt.clouddn.com/18-3-28/37407402.jpg",
       "avatar1": "http://og1yl0w9z.bkt.clouddn.com/18-3-28/61685877.jpg",
@@ -88487,6 +88487,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
 
                     case _MoreMenu.MORE_MENU.Remove_Key:
                         TargetComponent = 'CustomKeyPage';
+                        params.isRemoveKey = true;
                         params.flag = _LanguageDao.FLAG_LANGUAGE.flag_key;
                         break;
 
@@ -88556,7 +88557,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     title: "\u6211\u7684",
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 123
+                        lineNumber: 124
                     }
                 });
 
@@ -88566,7 +88567,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         style: _GlobalStyles2.default.root_container,
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 127
+                            lineNumber: 128
                         }
                     },
                     navigationBar,
@@ -88575,7 +88576,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 129
+                                lineNumber: 130
                             }
                         },
                         _react2.default.createElement(
@@ -88586,7 +88587,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 },
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 131
+                                    lineNumber: 132
                                 }
                             },
                             _react2.default.createElement(
@@ -88597,7 +88598,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                     }],
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 133
+                                        lineNumber: 134
                                     }
                                 },
                                 _react2.default.createElement(
@@ -88609,7 +88610,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                         },
                                         __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 134
+                                            lineNumber: 135
                                         }
                                     },
                                     _react2.default.createElement(_reactNative.Image, {
@@ -88621,7 +88622,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                         }, this.state.theme.styles.tabBarSelectedIcon],
                                         __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 135
+                                            lineNumber: 136
                                         }
                                     }),
                                     _react2.default.createElement(
@@ -88629,7 +88630,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                         {
                                             __source: {
                                                 fileName: _jsxFileName,
-                                                lineNumber: 137
+                                                lineNumber: 138
                                             }
                                         },
                                         "GitHub Popular"
@@ -88646,7 +88647,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                     }, this.state.theme.styles.tabBarSelectedIcon],
                                     __source: {
                                         fileName: _jsxFileName,
-                                        lineNumber: 139
+                                        lineNumber: 140
                                     }
                                 })
                             )
@@ -88655,7 +88656,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 149
+                                lineNumber: 150
                             }
                         }),
                         _react2.default.createElement(
@@ -88664,7 +88665,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 style: styles.groupTitle,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 152
+                                    lineNumber: 153
                                 }
                             },
                             "\u8D8B\u52BF\u7BA1\u7406"
@@ -88673,7 +88674,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 154
+                                lineNumber: 155
                             }
                         }),
                         this.getItem(_MoreMenu.MORE_MENU.Custom_Language, _require(_dependencyMap[17], './img/ic_custom_language.png'), '自定义语言'),
@@ -88681,7 +88682,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 157
+                                lineNumber: 158
                             }
                         }),
                         this.getItem(_MoreMenu.MORE_MENU.Sort_Language, _require(_dependencyMap[18], './img/ic_swap_vert.png'), '语言排序'),
@@ -88691,7 +88692,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 style: styles.groupTitle,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 161
+                                    lineNumber: 162
                                 }
                             },
                             "\u6700\u70ED\u7BA1\u7406"
@@ -88700,7 +88701,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 163
+                                lineNumber: 164
                             }
                         }),
                         this.getItem(_MoreMenu.MORE_MENU.Custom_Key, _require(_dependencyMap[17], './img/ic_custom_language.png'), '自定义标签'),
@@ -88708,7 +88709,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 166
+                                lineNumber: 167
                             }
                         }),
                         this.getItem(_MoreMenu.MORE_MENU.Sort_Key, _require(_dependencyMap[18], './img/ic_swap_vert.png'), '标签排序'),
@@ -88716,7 +88717,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 169
+                                lineNumber: 170
                             }
                         }),
                         this.getItem(_MoreMenu.MORE_MENU.Remove_Key, _require(_dependencyMap[19], './img/ic_remove.png'), '标签移除'),
@@ -88726,7 +88727,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                                 style: styles.groupTitle,
                                 __source: {
                                     fileName: _jsxFileName,
-                                    lineNumber: 173
+                                    lineNumber: 174
                                 }
                             },
                             "\u8BBE\u7F6E"
@@ -88735,7 +88736,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 175
+                                lineNumber: 176
                             }
                         }),
                         this.getItem(_MoreMenu.MORE_MENU.Custom_Theme, _require(_dependencyMap[20], './img/ic_view_quilt.png'), '自定义主题'),
@@ -88743,7 +88744,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 178
+                                lineNumber: 179
                             }
                         }),
                         this.getItem('更新', _require(_dependencyMap[21], './img/ic_check_box_outline_blank.png'), '检查更新'),
@@ -88751,7 +88752,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 181
+                                lineNumber: 182
                             }
                         }),
                         this.getItem(_MoreMenu.MORE_MENU.About_Author, _require(_dependencyMap[22], './img/ic_insert_emoticon.png'), '关于作者'),
@@ -88759,7 +88760,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             style: _GlobalStyles2.default.line,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 183
+                                lineNumber: 184
                             }
                         })
                     ),
